@@ -38,6 +38,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Interactive Kabaddi Scorekeeper Demo ---
   initScorekeeperDemo();
+
+  // --- Interactive Kabaddi Mat Animation Engine ---
+  initKabaddiMatAnimation();
 });
 
 function initScorekeeperDemo() {
@@ -370,3 +373,219 @@ function initScorekeeperDemo() {
   render();
   startRaidTimer();
 }
+
+/**
+ * Kabaddi Mat Live Animation Engine
+ * Animates real Kabaddi maneuvers: Running Hand Touch, Bonus Point, Chain Tackle, and Super Raid
+ */
+function initKabaddiMatAnimation() {
+  const raider = document.getElementById('animRaider');
+  const actionBanner = document.getElementById('matActionBanner');
+  const matContainer = document.getElementById('matArena');
+
+  if (!raider || !matContainer) return;
+
+  const defenders = {
+    lc: document.getElementById('defLC'), // Left Corner
+    li: document.getElementById('defLI'), // Left In
+    lcov: document.getElementById('defLCov'), // Left Cover
+    c: document.getElementById('defC'), // Center
+    rcov: document.getElementById('defRCov'), // Right Cover
+    ri: document.getElementById('defRI'), // Right In
+    rc: document.getElementById('defRC')  // Right Corner
+  };
+
+  const defaultPositions = {
+    raider: { top: '82%', left: '50%' },
+    lc: { top: '22%', left: '16%' },
+    li: { top: '32%', left: '26%' },
+    lcov: { top: '38%', left: '38%' },
+    c: { top: '42%', left: '50%' },
+    rcov: { top: '38%', left: '62%' },
+    ri: { top: '32%', left: '74%' },
+    rc: { top: '22%', left: '84%' }
+  };
+
+  function resetPositions() {
+    setPos(raider, defaultPositions.raider.top, defaultPositions.raider.left);
+    Object.keys(defenders).forEach(k => {
+      if (defenders[k]) setPos(defenders[k], defaultPositions[k].top, defaultPositions[k].left);
+    });
+  }
+
+  function setPos(el, top, left) {
+    if (el) {
+      el.style.top = top;
+      el.style.left = left;
+    }
+  }
+
+  function setBanner(text, type = 'info') {
+    if (!actionBanner) return;
+    let badgeClass = 'bg-brand-500/20 text-brand-400 border border-brand-500/30';
+    if (type === 'bonus') badgeClass = 'bg-amber-500/20 text-amber-400 border border-amber-500/30';
+    if (type === 'tackle') badgeClass = 'bg-blue-500/20 text-blue-400 border border-blue-500/30';
+    if (type === 'super') badgeClass = 'bg-gradient-to-r from-brand-500 to-red-500 text-white font-black';
+
+    actionBanner.className = `inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold transition-all transform scale-105 ${badgeClass}`;
+    actionBanner.innerHTML = text;
+  }
+
+  function triggerBlast(top, left) {
+    const blast = document.createElement('div');
+    blast.className = 'impact-blast';
+    blast.style.top = top;
+    blast.style.left = left;
+    matContainer.appendChild(blast);
+    setTimeout(() => blast.remove(), 600);
+  }
+
+  // Maneuver 1: Running Hand Touch
+  function animHandTouch() {
+    resetPositions();
+    setBanner('⚡ Raider dashing for Running Hand Touch...', 'info');
+
+    setTimeout(() => {
+      // Raider sprints toward Right Cover
+      setPos(raider, '40%', '60%');
+      setPos(defenders.rcov, '36%', '64%');
+    }, 200);
+
+    setTimeout(() => {
+      // Touch impact!
+      triggerBlast('38%', '61%');
+      setBanner('🎯 TOUCH! Raider tags Right Cover (+1 Point)', 'info');
+      // Raider retreats safely over midline
+      setPos(raider, '82%', '50%');
+    }, 900);
+
+    setTimeout(() => {
+      resetPositions();
+      setBanner('✅ Raider safely back across midline', 'info');
+    }, 1800);
+  }
+
+  // Maneuver 2: Bonus Point Toe-Touch
+  function animBonus() {
+    resetPositions();
+    setBanner('🎯 Raider hunting for Bonus Line crossing...', 'bonus');
+
+    setTimeout(() => {
+      // Raider feints left, steps over bonus line
+      setPos(raider, '58%', '28%');
+    }, 300);
+
+    setTimeout(() => {
+      triggerBlast('57%', '28%');
+      setBanner('✨ CLEAN BONUS POINT! Trailing foot in air (+1 Bonus)', 'bonus');
+    }, 900);
+
+    setTimeout(() => {
+      // Quick return to midline
+      setPos(raider, '82%', '45%');
+    }, 1500);
+
+    setTimeout(() => {
+      resetPositions();
+      setBanner('✅ Bonus Secured!', 'bonus');
+    }, 2200);
+  }
+
+  // Maneuver 3: Chain Tackle / Ankle Hold
+  function animTackle() {
+    resetPositions();
+    setBanner('🛡️ Defensive chain closing in on raider...', 'tackle');
+
+    setTimeout(() => {
+      // Raider ventures deep
+      setPos(raider, '36%', '50%');
+    }, 300);
+
+    setTimeout(() => {
+      // Defenders collapse in a chain tackle
+      setPos(defenders.lc, '36%', '46%');
+      setPos(defenders.lcov, '36%', '48%');
+      setPos(defenders.rcov, '36%', '52%');
+      setPos(defenders.rc, '36%', '54%');
+      triggerBlast('35%', '50%');
+      setBanner('💥 PINNED! Defense executes sensational Chain Tackle (+1 Pt)', 'tackle');
+    }, 900);
+
+    setTimeout(() => {
+      setBanner('🛑 Raider is OUT! Revival awarded to defending team', 'tackle');
+    }, 1800);
+
+    setTimeout(() => {
+      resetPositions();
+    }, 2800);
+  }
+
+  // Maneuver 4: Super Raid (Multiple touches)
+  function animSuperRaid() {
+    resetPositions();
+    setBanner('🔥 Raider charging into defense...', 'super');
+
+    setTimeout(() => {
+      // Tag 1 (Right Corner)
+      setPos(raider, '30%', '76%');
+      triggerBlast('28%', '78%');
+    }, 400);
+
+    setTimeout(() => {
+      // Tag 2 (Center)
+      setPos(raider, '40%', '50%');
+      triggerBlast('39%', '50%');
+    }, 900);
+
+    setTimeout(() => {
+      // Tag 3 (Left In)
+      setPos(raider, '38%', '32%');
+      triggerBlast('36%', '30%');
+      setBanner('🔥 SUPER RAID! 3 Defenders tagged! Dashing to midline...', 'super');
+    }, 1400);
+
+    setTimeout(() => {
+      // Escape to midline
+      setPos(raider, '82%', '50%');
+    }, 1900);
+
+    setTimeout(() => {
+      resetPositions();
+      setBanner('🏆 SENSATIONAL SUPER RAID! +3 Points!', 'super');
+    }, 2600);
+  }
+
+  // Auto-play rotation
+  let autoTimer = null;
+  const maneuvers = [animHandTouch, animBonus, animTackle, animSuperRaid];
+  let curIndex = 0;
+
+  function runNextManeuver() {
+    maneuvers[curIndex]();
+    curIndex = (curIndex + 1) % maneuvers.length;
+  }
+
+  function startAutoPlay() {
+    if (autoTimer) clearInterval(autoTimer);
+    runNextManeuver();
+    autoTimer = setInterval(runNextManeuver, 4000);
+  }
+
+  // Bind Buttons
+  const btnAnimTouch = document.getElementById('btnAnimTouch');
+  const btnAnimBonus = document.getElementById('btnAnimBonus');
+  const btnAnimTackle = document.getElementById('btnAnimTackle');
+  const btnAnimSuper = document.getElementById('btnAnimSuper');
+  const btnAnimAuto = document.getElementById('btnAnimAuto');
+
+  if (btnAnimTouch) btnAnimTouch.addEventListener('click', () => { clearInterval(autoTimer); animHandTouch(); });
+  if (btnAnimBonus) btnAnimBonus.addEventListener('click', () => { clearInterval(autoTimer); animBonus(); });
+  if (btnAnimTackle) btnAnimTackle.addEventListener('click', () => { clearInterval(autoTimer); animTackle(); });
+  if (btnAnimSuper) btnAnimSuper.addEventListener('click', () => { clearInterval(autoTimer); animSuperRaid(); });
+  if (btnAnimAuto) btnAnimAuto.addEventListener('click', () => { startAutoPlay(); });
+
+  // Initial setup
+  resetPositions();
+  startAutoPlay();
+}
+
