@@ -1,121 +1,194 @@
-/* Romantic Proposal Styles for Kruthika */
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap');
+/* Kabba Hub Custom Styles & Kabaddi Animations */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cabinet+Grotesk:wght@700;800;900&display=swap');
 
 :root {
-  --rose-primary: #ff2a6d;
-  --rose-glow: rgba(255, 42, 109, 0.4);
-  --gold-accent: #fcd34d;
+  --primary-brand: #ff5500;
+  --primary-hover: #e04a00;
+  --accent-gold: #f59e0b;
+  --dark-base: #0a0f1d;
+  --card-bg: #131b2e;
 }
 
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  background: radial-gradient(circle at center, #240515 0%, #12020a 50%, #080004 100%);
-  color: #fff1f2;
+  background-color: var(--dark-base);
+  color: #f8fafc;
   overflow-x: hidden;
-  min-height: 100vh;
 }
 
-.script-font {
-  font-family: 'Great Vibes', cursive;
+.heading-font {
+  font-family: 'Cabinet Grotesk', sans-serif;
 }
 
-.serif-font {
-  font-family: 'Playfair Display', serif;
+/* Vibrant gradients */
+.hero-gradient {
+  background: radial-gradient(circle at top center, rgba(255, 85, 0, 0.22) 0%, rgba(10, 15, 29, 0) 70%);
 }
 
-/* Floating Hearts Background Container */
-.hearts-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 1;
+.glow-orange {
+  box-shadow: 0 0 50px -10px rgba(255, 85, 0, 0.4);
 }
 
-.heart-particle {
-  position: absolute;
-  color: #ff3377;
-  opacity: 0.6;
-  bottom: -40px;
-  animation: floatUp 8s linear infinite;
+.glow-subtle {
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
 }
 
-@keyframes floatUp {
-  0% {
-    transform: translateY(0) scale(0.6) rotate(0deg);
-    opacity: 0;
-  }
-  20% {
-    opacity: 0.8;
-  }
-  80% {
-    opacity: 0.7;
-  }
-  100% {
-    transform: translateY(-110vh) scale(1.3) rotate(360deg);
-    opacity: 0;
-  }
+.glass-card {
+  background: rgba(19, 27, 46, 0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Beating Heart Animation */
-@keyframes heartBeat {
+.glass-card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card-hover:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 85, 0, 0.4);
+  box-shadow: 0 20px 30px -10px rgba(255, 85, 0, 0.15);
+}
+
+/* Pulse animation for Live indicator */
+@keyframes pulse-dot {
   0%, 100% {
+    opacity: 1;
     transform: scale(1);
   }
-  14% {
-    transform: scale(1.25);
-  }
-  28% {
-    transform: scale(1);
-  }
-  42% {
-    transform: scale(1.2);
-  }
-  70% {
-    transform: scale(1);
+  50% {
+    opacity: 0.4;
+    transform: scale(0.85);
   }
 }
 
-.heart-beat {
-  display: inline-block;
-  animation: heartBeat 1.4s infinite ease-in-out;
+.live-pulse {
+  animation: pulse-dot 1.8s infinite ease-in-out;
 }
 
-/* Romantic Text Glow */
-.love-glow {
-  text-shadow: 0 0 20px rgba(255, 42, 109, 0.8), 0 0 40px rgba(255, 42, 109, 0.4), 0 0 60px rgba(255, 180, 200, 0.3);
+/* Raid Timer Progress Bar */
+.raid-progress {
+  transition: width 1s linear;
 }
 
-.gold-glow {
-  text-shadow: 0 0 15px rgba(252, 211, 77, 0.6);
+/* --- KABADDI MAT ANIMATION STYLES --- */
+.mat-court {
+  background: linear-gradient(180deg, #0d1527 0%, #152038 100%);
+  border: 2px solid #2a3a5e;
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
 }
 
-/* Glassmorphism Card for Proposal */
-.love-card {
-  background: rgba(35, 10, 25, 0.65);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 42, 109, 0.3);
-  box-shadow: 0 20px 50px -10px rgba(255, 42, 109, 0.3), inset 0 0 30px rgba(255, 42, 109, 0.1);
+/* Court Lines */
+.midline {
+  border-top: 3px solid #ff5500;
+  box-shadow: 0 0 15px rgba(255, 85, 0, 0.6);
 }
 
-/* Confetti Burst */
-.confetti-heart {
-  position: fixed;
+.baulk-line {
+  border-top: 2px dashed #94a3b8;
+}
+
+.bonus-line {
+  border-top: 2px solid #f59e0b;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+}
+
+/* Animated Raider */
+.animated-raider {
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff5500, #ffaa00);
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 20px rgba(255, 85, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 13px;
+  color: #ffffff;
+  z-index: 20;
+  transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Animated Defenders */
+.animated-defender {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  border: 2px solid #93c5fd;
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 11px;
+  color: #ffffff;
+  z-index: 10;
+  transition: all 0.5s ease-out;
+}
+
+/* Chain linkage between defenders */
+.chain-line {
+  position: absolute;
+  height: 2px;
+  background: rgba(147, 197, 253, 0.4);
   pointer-events: none;
-  z-index: 100;
-  animation: explode 2s ease-out forwards;
+  z-index: 5;
 }
 
-@keyframes explode {
+/* Impact Blast Animation */
+@keyframes blast-expand {
   0% {
-    transform: translate(0, 0) scale(0.5);
+    transform: scale(0.2);
     opacity: 1;
   }
   100% {
-    transform: translate(var(--tx), var(--ty)) scale(1.5) rotate(var(--rot));
+    transform: scale(2.5);
     opacity: 0;
   }
+}
+
+.impact-blast {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 220, 0, 0.9) 0%, rgba(255, 85, 0, 0.6) 50%, rgba(255, 85, 0, 0) 100%);
+  pointer-events: none;
+  z-index: 25;
+  animation: blast-expand 0.6s ease-out forwards;
+}
+
+/* Floating animation for badge cards */
+@keyframes float-badge {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.float-badge {
+  animation: float-badge 4s infinite ease-in-out;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0f1d;
+}
+::-webkit-scrollbar-thumb {
+  background: #24304f;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ff5500;
 }

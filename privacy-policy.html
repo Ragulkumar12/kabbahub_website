@@ -36,17 +36,7 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-[#0a0f1d] text-slate-100 antialiased selection:bg-rose-500 selection:text-white relative">
-
-  <!-- Floating Hearts Background Container -->
-  <div id="heartsContainer" class="hearts-container"></div>
-
-  <!-- Romantic Proposal Banner -->
-  <div class="sticky top-0 z-50 bg-gradient-to-r from-rose-900/95 via-pink-900/95 to-rose-950/95 backdrop-blur-md border-b border-rose-500/40 text-rose-200 text-sm font-black py-3 px-4 text-center flex items-center justify-center gap-3 shadow-xl">
-    <span class="heart-beat text-xl">❤️</span>
-    <span class="tracking-widest uppercase love-glow text-white font-black text-base sm:text-lg">I LOVE YOU KRUTHIKA</span>
-    <span class="heart-beat text-xl">💖</span>
-  </div>
+<body class="bg-[#0a0f1d] text-slate-100 antialiased selection:bg-brand-500 selection:text-white">
 
   <!-- Navbar -->
   <nav class="sticky top-0 z-50 bg-[#0a0f1d]/90 backdrop-blur-md border-b border-slate-800">
@@ -294,6 +284,8 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
 </body>
 </html>
