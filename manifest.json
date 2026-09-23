@@ -1,0 +1,22 @@
+{
+  "name": "kabba hub - Kabaddi Live Scoring & Tournaments",
+  "short_name": "kabba hub",
+  "description": "Live scoring, tournament management, and player statistics app for Kabaddi.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0f1d",
+  "theme_color": "#ff5500",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

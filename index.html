@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>kabba hub - Live Scoring, Tournaments & Player Stats for Kabaddi</title>
+  <meta name="description" content="Kabba Hub is the ultimate live scoring, tournament management, and player statistics platform for Kabaddi. Track raid-by-raid scores, manage brackets, and elevate grassroots Kabaddi.">
+  
+  <!-- Open Graph / Meta -->
+  <meta property="og:title" content="Kabba Hub - Live Scoring & Tournament App for Kabaddi">
+  <meta property="og:description" content="Raid-by-raid live scoring, tournament manager, player statistics, and broadcast overlays for Kabaddi.">
+  <!-- Mobile & PWA Optimization -->
+  <meta name="theme-color" content="#ff5500">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="kabba hub">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#fff7ed',
+              100: '#ffedd5',
+              400: '#fb923c',
+              500: '#ff5500',
+              600: '#e04a00',
+              700: '#c23b00',
+            },
+            surface: {
+              950: '#060a14',
+              900: '#0a0f1d',
+              850: '#0f172a',
+              800: '#131b2e',
+              700: '#1e2942',
+              600: '#2d3b5c',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-[#0a0f1d] text-slate-100 antialiased selection:bg-brand-500 selection:text-white">
+
+  <!-- Top Announcement Bar -->
+  <div class="bg-gradient-to-r from-brand-600 via-orange-600 to-amber-600 text-white text-xs font-semibold py-2 px-4 text-center">
+    <span>🏆 Powering 1,200+ Grassroots Kabaddi Tournaments Across India &bull; Free Scorer App Now Available!</span>
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav class="sticky top-0 z-50 bg-[#0a0f1d]/90 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <!-- Brand Logo -->
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-brand-600 to-amber-500 flex items-center justify-center shadow-lg shadow-brand-500/20 group-hover:scale-105 transition">
+            <i data-lucide="zap" class="w-6 h-6 text-white fill-white"></i>
+          </div>
+          <div>
+            <span class="text-2xl font-black tracking-tight text-white heading-font">KABBA <span class="text-brand-500">HUB</span></span>
+            <span class="block text-[10px] tracking-widest uppercase font-semibold text-slate-400">Kabaddi Live Scoring</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <div class="hidden lg:flex items-center gap-8">
+          <a href="#features" class="text-sm font-medium text-slate-300 hover:text-white transition">Features</a>
+          <a href="#demo" class="text-sm font-medium text-slate-300 hover:text-white transition flex items-center gap-1.5">
+            <span>Live Score Demo</span>
+            <span class="w-2 h-2 rounded-full bg-red-500 live-pulse"></span>
+          </a>
+          <a href="#how-it-works" class="text-sm font-medium text-slate-300 hover:text-white transition">How It Works</a>
+          <a href="#tournaments" class="text-sm font-medium text-slate-300 hover:text-white transition">Tournaments</a>
+          <a href="#faq" class="text-sm font-medium text-slate-300 hover:text-white transition">FAQ</a>
+          <a href="privacy-policy.html" class="text-sm font-medium text-slate-300 hover:text-white transition">Privacy</a>
+          <a href="terms-of-use.html" class="text-sm font-medium text-slate-300 hover:text-white transition">Terms</a>
+        </div>
+
+        <!-- Action CTA -->
+        <div class="hidden sm:flex items-center gap-4">
+          <a href="#demo" class="text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-white px-3 py-2">
+            Try Demo
+          </a>
+          <a href="#download" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold bg-brand-500 hover:bg-brand-600 text-white shadow-lg shadow-brand-500/25 transition hover:scale-105 active:scale-95">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>Get App</span>
+          </a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <div class="lg:hidden">
+          <button id="mobileMenuBtn" class="p-2 text-slate-400 hover:text-white focus:outline-none">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenu" class="hidden lg:hidden bg-surface-900 border-b border-slate-800 px-4 pt-2 pb-6 space-y-3">
+      <a href="#features" class="block py-2 text-base font-medium text-slate-300 hover:text-white">Features</a>
+      <a href="#demo" class="block py-2 text-base font-medium text-slate-300 hover:text-white">Live Score Demo</a>
+      <a href="#how-it-works" class="block py-2 text-base font-medium text-slate-300 hover:text-white">How It Works</a>
+      <a href="#tournaments" class="block py-2 text-base font-medium text-slate-300 hover:text-white">Tournaments</a>
+      <a href="#faq" class="block py-2 text-base font-medium text-slate-300 hover:text-white">FAQ</a>
+      <a href="privacy-policy.html" class="block py-2 text-base font-medium text-slate-300 hover:text-white">Privacy Policy</a>
+      <a href="terms-of-use.html" class="block py-2 text-base font-medium text-slate-300 hover:text-white">Terms of Use</a>
+      <div class="pt-2">
+        <a href="#download" class="block w-full text-center py-3 rounded-xl bg-brand-500 text-white font-bold">
+          Download Kabba Hub
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative pt-12 pb-24 lg:pt-20 lg:pb-32 overflow-hidden hero-gradient">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left: Headline & CTAs -->
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+          
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide uppercase bg-brand-500/10 text-brand-400 border border-brand-500/20">
+            <i data-lucide="award" class="w-4 h-4 text-brand-500"></i> The Premier Platform for Kabaddi
+          </div>
+
+          <h1 class="text-4xl sm:text-6xl font-black text-white tracking-tight leading-[1.1] heading-font">
+            Raid-by-Raid Live Scores & Tournaments for <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 via-orange-400 to-amber-300">Kabaddi</span>.
+          </h1>
+
+          <p class="text-lg sm:text-xl text-slate-300 max-w-2xl font-normal leading-relaxed">
+            Empowering grassroots Kabaddi from local mud grounds to indoor stadiums. Score raid touches, bonus lines, super tackles, and manage full tournaments with live broadcast graphics and player career stats.
+          </p>
+
+          <!-- Download Badges & Quick Demo CTA -->
+          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+            <a href="#download" class="flex items-center gap-3 px-6 py-3.5 rounded-xl bg-surface-800 hover:bg-surface-700 border border-slate-700 hover:border-slate-500 transition shadow-lg group">
+              <i data-lucide="play" class="w-6 h-6 text-emerald-400 fill-emerald-400"></i>
+              <div class="text-left">
+                <span class="block text-[10px] uppercase font-semibold text-slate-400">Get it on</span>
+                <span class="block text-sm font-bold text-white group-hover:text-brand-400">Google Play</span>
+              </div>
+            </a>
+
+            <a href="#download" class="flex items-center gap-3 px-6 py-3.5 rounded-xl bg-surface-800 hover:bg-surface-700 border border-slate-700 hover:border-slate-500 transition shadow-lg group">
+              <i data-lucide="apple" class="w-6 h-6 text-white fill-white"></i>
+              <div class="text-left">
+                <span class="block text-[10px] uppercase font-semibold text-slate-400">Download on</span>
+                <span class="block text-sm font-bold text-white group-hover:text-brand-400">App Store</span>
+              </div>
+            </a>
+
+            <a href="#demo" class="inline-flex items-center gap-2 px-6 py-4 rounded-xl bg-brand-500 hover:bg-brand-600 font-bold text-white shadow-xl shadow-brand-500/25 transition hover:scale-105">
+              <span>Try Live Scorer</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </a>
+          </div>
+
+          <!-- Social Proof Ticker -->
+          <div class="pt-8 border-t border-slate-800/80 grid grid-cols-3 gap-4 max-w-lg mx-auto lg:mx-0 text-center lg:text-left">
+            <div>
+              <span class="block text-2xl sm:text-3xl font-black text-white heading-font">15K+</span>
+              <span class="block text-xs text-slate-400 font-medium">Matches Scored</span>
+            </div>
+            <div>
+              <span class="block text-2xl sm:text-3xl font-black text-brand-400 heading-font">1,200+</span>
+              <span class="block text-xs text-slate-400 font-medium">Tournaments</span>
+            </div>
+            <div>
+              <span class="block text-2xl sm:text-3xl font-black text-amber-400 heading-font">50K+</span>
+              <span class="block text-xs text-slate-400 font-medium">Player Profiles</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right: Hero Visual Card (Phone / Live Score Card) -->
+        <div class="lg:col-span-5 relative">
+          <div class="relative mx-auto max-w-sm rounded-3xl p-1 bg-gradient-to-b from-brand-500/40 via-slate-800 to-transparent shadow-2xl glow-orange">
+            <div class="bg-surface-900 rounded-[22px] overflow-hidden border border-slate-700/80 p-5 space-y-4">
+              
+              <!-- Match Header -->
+              <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div class="flex items-center gap-2">
+                  <span class="inline-block w-2.5 h-2.5 rounded-full bg-red-500 live-pulse"></span>
+                  <span class="text-xs font-bold uppercase tracking-wider text-red-400">LIVE MATCH</span>
+                </div>
+                <span class="text-xs text-slate-400 font-mono">2nd Half &bull; 14:22</span>
+              </div>
+
+              <!-- Score Card -->
+              <div class="grid grid-cols-2 gap-3 bg-surface-800/80 p-4 rounded-2xl border border-slate-700/50">
+                <div class="text-center border-r border-slate-700/60 pr-2">
+                  <span class="text-xs font-bold text-brand-400 block truncate">Thalaivas Pro</span>
+                  <span class="text-4xl font-black text-white my-1 block heading-font">24</span>
+                  <span class="text-[10px] text-emerald-400 font-medium block">6/7 on Mat</span>
+                </div>
+                <div class="text-center pl-2">
+                  <span class="text-xs font-bold text-blue-400 block truncate">Bengaluru Yoddhas</span>
+                  <span class="text-4xl font-black text-white my-1 block heading-font">21</span>
+                  <span class="text-[10px] text-amber-400 font-medium block">3/7 on Mat (Super Tackle ON)</span>
+                </div>
+              </div>
+
+              <!-- Active Raider Banner -->
+              <div class="bg-gradient-to-r from-brand-600/20 to-amber-500/20 border border-brand-500/30 rounded-xl p-3 flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center font-bold text-white text-xs">
+                    #7
+                  </div>
+                  <div>
+                    <span class="text-xs font-bold text-white block">Arun Kumar</span>
+                    <span class="text-[10px] text-brand-400 font-medium">Right Corner Raider &bull; 11 pts today</span>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="text-lg font-black text-amber-300 font-mono">18s</span>
+                  <span class="text-[9px] uppercase text-slate-400 block">Raid Clock</span>
+                </div>
+              </div>
+
+              <!-- Mini Event Feed -->
+              <div class="space-y-2 text-xs">
+                <div class="flex items-center gap-2 p-2 rounded-lg bg-surface-800 text-slate-300">
+                  <i data-lucide="zap" class="w-3.5 h-3.5 text-brand-400 shrink-0"></i>
+                  <span>Super Raid! Arun touches 3 defenders!</span>
+                </div>
+                <div class="flex items-center gap-2 p-2 rounded-lg bg-surface-800 text-slate-300">
+                  <i data-lucide="shield" class="w-3.5 h-3.5 text-blue-400 shrink-0"></i>
+                  <span>Super Tackle executed by Yoddhas (+2 Pts)</span>
+                </div>
+              </div>
+
+              <!-- Action Link -->
+              <div class="pt-1 text-center">
+                <a href="#demo" class="text-xs font-bold text-brand-400 hover:text-brand-300 flex items-center justify-center gap-1">
+                  <span>Interact with full simulator below</span>
+                  <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+                </a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Interactive Live Score Demo Widget -->
+  <section id="demo" class="py-20 bg-surface-950 border-t border-b border-slate-800 relative">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-brand-500/10 text-brand-500 border border-brand-500/20">
+          <i data-lucide="gamepad-2" class="w-4 h-4"></i> Try It Yourself
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-black text-white heading-font tracking-tight">
+          Interactive Kabaddi Live Scorekeeper
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base">
+          Tap the buttons below to experience how scorers record touches, bonuses, super tackles, and all-outs in real time with automatic revival tracking.
+        </p>
+      </div>
+
+      <!-- Scoreboard Container -->
+      <div class="bg-surface-900 border border-slate-700/80 rounded-3xl p-6 sm:p-8 shadow-2xl">
+        
+        <!-- Top Bar: Status, Timer, DOD Alert -->
+        <div class="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-slate-800">
+          <div class="flex items-center gap-3">
+            <span class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-red-500/20 text-red-400 border border-red-500/30">
+              <span class="w-2 h-2 rounded-full bg-red-500 live-pulse"></span>
+              LIVE
+            </span>
+            <span id="currentRaiderBadge" class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-brand-500/20 text-brand-400 border border-brand-500/30">
+              Thalaivas Raiding
+            </span>
+            <span id="dodBadge" class="hidden px-2.5 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-amber-500 text-black animate-bounce">
+              ⚠️ DO-OR-DIE RAID!
+            </span>
+          </div>
+
+          <!-- Raid Countdown Timer Widget -->
+          <div class="flex items-center gap-3 bg-surface-800 px-4 py-2 rounded-xl border border-slate-700">
+            <i data-lucide="clock" class="w-4 h-4 text-brand-500"></i>
+            <span class="text-xs text-slate-400 uppercase font-semibold">Raid Timer:</span>
+            <span id="raidTimer" class="font-mono text-lg font-black text-amber-400">30s</span>
+            <div class="w-16 h-2 bg-slate-700 rounded-full overflow-hidden">
+              <div id="raidTimerBar" class="raid-progress h-full bg-brand-500 w-full"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scores Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+          
+          <!-- Team A -->
+          <div class="bg-surface-800/80 border-2 border-brand-500/40 rounded-2xl p-5 relative overflow-hidden">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-brand-500"></span>
+                Thalaivas Warriors
+              </h3>
+              <span id="teamAMat" class="text-xs px-2.5 py-1 rounded-full font-semibold bg-slate-700/60 text-slate-300">
+                6/7 on mat
+              </span>
+            </div>
+            <div class="flex items-baseline gap-3 my-2">
+              <span id="teamAScore" class="text-6xl font-black text-white font-mono heading-font">18</span>
+              <span class="text-xs text-slate-400 font-medium uppercase">Points</span>
+            </div>
+            <div id="teamABreakdown" class="text-xs text-slate-400 font-mono border-t border-slate-700/60 pt-3">
+              Raids: 11 | Tackles: 7
+            </div>
+          </div>
+
+          <!-- Team B -->
+          <div class="bg-surface-800/80 border-2 border-blue-500/40 rounded-2xl p-5 relative overflow-hidden">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-blue-500"></span>
+                Paltan Strikers
+              </h3>
+              <span id="teamBMat" class="text-xs px-2.5 py-1 rounded-full font-semibold bg-slate-700/60 text-slate-300">
+                4/7 on mat
+              </span>
+            </div>
+            <div class="flex items-baseline gap-3 my-2">
+              <span id="teamBScore" class="text-6xl font-black text-white font-mono heading-font">16</span>
+              <span class="text-xs text-slate-400 font-medium uppercase">Points</span>
+            </div>
+            <div id="teamBBreakdown" class="text-xs text-slate-400 font-mono border-t border-slate-700/60 pt-3">
+              Raids: 10 | Tackles: 6
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Scorer Control Pad (Interactive Buttons) -->
+        <div class="bg-surface-850 border border-slate-800 rounded-2xl p-5 space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+              <i data-lucide="sliders" class="w-4 h-4 text-brand-500"></i>
+              Scorekeeper Action Controls
+            </span>
+            <button id="btnResetDemo" class="text-xs text-slate-400 hover:text-white flex items-center gap-1 transition">
+              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+              <span>Reset State</span>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            <button id="btnTouch" class="flex flex-col items-center justify-center p-3.5 rounded-xl bg-surface-700 hover:bg-brand-500 text-white font-bold transition group border border-slate-600 hover:border-brand-400">
+              <i data-lucide="zap" class="w-5 h-5 text-brand-400 group-hover:text-white mb-1"></i>
+              <span class="text-xs">Touch (+1)</span>
+            </button>
+
+            <button id="btnBonus" class="flex flex-col items-center justify-center p-3.5 rounded-xl bg-surface-700 hover:bg-amber-500 hover:text-black text-white font-bold transition group border border-slate-600 hover:border-amber-400">
+              <i data-lucide="target" class="w-5 h-5 text-amber-400 group-hover:text-black mb-1"></i>
+              <span class="text-xs">Bonus (+1)</span>
+            </button>
+
+            <button id="btnSuperRaid" class="flex flex-col items-center justify-center p-3.5 rounded-xl bg-surface-700 hover:bg-gradient-to-r hover:from-brand-500 hover:to-red-500 text-white font-bold transition group border border-slate-600 hover:border-red-400">
+              <i data-lucide="flame" class="w-5 h-5 text-orange-400 group-hover:text-white mb-1"></i>
+              <span class="text-xs">Super Raid (+3)</span>
+            </button>
+
+            <button id="btnEmpty" class="flex flex-col items-center justify-center p-3.5 rounded-xl bg-surface-700 hover:bg-slate-600 text-white font-bold transition group border border-slate-600">
+              <i data-lucide="clock" class="w-5 h-5 text-slate-400 group-hover:text-white mb-1"></i>
+              <span class="text-xs">Empty Raid</span>
+            </button>
+
+            <button id="btnTackle" class="flex flex-col items-center justify-center p-3.5 rounded-xl bg-surface-700 hover:bg-blue-600 text-white font-bold transition group border border-slate-600 hover:border-blue-400">
+              <i data-lucide="shield" class="w-5 h-5 text-blue-400 group-hover:text-white mb-1"></i>
+              <span class="text-xs">Tackle (+1)</span>
+            </button>
+
+            <button id="btnSuperTackle" class="flex flex-col items-center justify-center p-3.5 rounded-xl bg-surface-700 hover:bg-indigo-600 text-white font-bold transition group border border-slate-600 hover:border-indigo-400">
+              <i data-lucide="shield-alert" class="w-5 h-5 text-indigo-400 group-hover:text-white mb-1"></i>
+              <span class="text-xs">Super Tackle (+2)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Commentary Log -->
+        <div class="mt-6 pt-5 border-t border-slate-800">
+          <div class="flex items-center gap-2 mb-3">
+            <i data-lucide="activity" class="w-4 h-4 text-brand-500"></i>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Live Commentary & Raid History</span>
+          </div>
+          <div id="demoCommentary" class="space-y-1.5">
+            <!-- Dynamically populated by script.js -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Key Features Section -->
+  <section id="features" class="py-24 bg-surface-900 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-brand-500/10 text-brand-400 border border-brand-500/20">
+          <i data-lucide="star" class="w-4 h-4 text-brand-500"></i> Why Kabba Hub
+        </span>
+        <h2 class="text-3xl sm:text-5xl font-black text-white heading-font tracking-tight">
+          Everything You Need for Kabaddi Scoring
+        </h2>
+        <p class="text-slate-400 text-base sm:text-lg">
+          Designed specifically for the lightning speed and intricate rules of Kabaddi, from village championships to state tournaments.
+        </p>
+      </div>
+
+      <!-- Features Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- Feature 1 -->
+        <div class="glass-card glass-card-hover rounded-2xl p-8 space-y-4">
+          <div class="w-12 h-12 rounded-xl bg-brand-500/20 border border-brand-500/30 flex items-center justify-center text-brand-500">
+            <i data-lucide="smartphone" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white heading-font">Raid-by-Raid Scorer</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            One-touch scoring for touch points, bonus lines, do-or-die raids, super tackles, and automatic 7-player revivals with zero mental math needed on the mat.
+          </p>
+          <div class="text-xs font-semibold text-brand-400 flex items-center gap-1 pt-2">
+            <span>Offline-first capability</span>
+            <i data-lucide="check" class="w-4 h-4"></i>
+          </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="glass-card glass-card-hover rounded-2xl p-8 space-y-4">
+          <div class="w-12 h-12 rounded-xl bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
+            <i data-lucide="trophy" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white heading-font">Tournament Management</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Create leagues, knockout brackets, pools, and fixtures in minutes. Points tables automatically calculate score differences, head-to-head records, and tie-breakers.
+          </p>
+          <div class="text-xs font-semibold text-blue-400 flex items-center gap-1 pt-2">
+            <span>Auto bracket generation</span>
+            <i data-lucide="check" class="w-4 h-4"></i>
+          </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="glass-card glass-card-hover rounded-2xl p-8 space-y-4">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400">
+            <i data-lucide="user-check" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white heading-font">Player Profiles & MVP Stats</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Comprehensive career records: Super 10s, High 5s, Raid strike rate, Tackle success percentage, and Best Raider / Best Defender leaderboard awards.
+          </p>
+          <div class="text-xs font-semibold text-amber-400 flex items-center gap-1 pt-2">
+            <span>Digital Player ID Cards</span>
+            <i data-lucide="check" class="w-4 h-4"></i>
+          </div>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="glass-card glass-card-hover rounded-2xl p-8 space-y-4">
+          <div class="w-12 h-12 rounded-xl bg-red-500/20 border border-red-500/30 flex items-center justify-center text-red-400">
+            <i data-lucide="tv" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white heading-font">Live Broadcast Overlays</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Stream your matches online with professional television-style score graphics, raider clock graphics, and lower thirds powered by kabba hub web overlay links.
+          </p>
+          <div class="text-xs font-semibold text-red-400 flex items-center gap-1 pt-2">
+            <span>Browser-source overlays</span>
+            <i data-lucide="check" class="w-4 h-4"></i>
+          </div>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="glass-card glass-card-hover rounded-2xl p-8 space-y-4">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+            <i data-lucide="file-spreadsheet" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white heading-font">PDF Official Scoresheets</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Export official federation-compliant Kabaddi match sheets with raid rosters, umpire signatures, and point breakdowns ready for tournament archives.
+          </p>
+          <div class="text-xs font-semibold text-emerald-400 flex items-center gap-1 pt-2">
+            <span>One-tap print & share</span>
+            <i data-lucide="check" class="w-4 h-4"></i>
+          </div>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="glass-card glass-card-hover rounded-2xl p-8 space-y-4">
+          <div class="w-12 h-12 rounded-xl bg-purple-500/20 border border-purple-500/30 flex items-center justify-center text-purple-400">
+            <i data-lucide="share-2" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white heading-font">Live Match Link for Fans</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Every match gets a unique shareable web link. Parents, club followers, and village fans can watch raid-by-raid live score updates on any browser with zero app installation needed.
+          </p>
+          <div class="text-xs font-semibold text-purple-400 flex items-center gap-1 pt-2">
+            <span>Instant WhatsApp sharing</span>
+            <i data-lucide="check" class="w-4 h-4"></i>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section id="how-it-works" class="py-24 bg-surface-950 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-brand-500/10 text-brand-400 border border-brand-500/20">
+          <i data-lucide="list-ordered" class="w-4 h-4"></i> Seamless Flow
+        </span>
+        <h2 class="text-3xl sm:text-5xl font-black text-white heading-font tracking-tight">
+          How Kabba Hub Works
+        </h2>
+        <p class="text-slate-400 text-base">
+          From first toss to final whistle in three intuitive steps.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+        
+        <!-- Step 1 -->
+        <div class="bg-surface-900 border border-slate-800 rounded-2xl p-8 relative">
+          <span class="text-5xl font-black text-brand-500/20 absolute top-4 right-6 font-mono">01</span>
+          <div class="w-12 h-12 rounded-xl bg-brand-500/20 flex items-center justify-center text-brand-500 mb-6 font-bold text-lg">
+            1
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2 heading-font">Create Tournament & Teams</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Set up your tournament, configure match duration (e.g. 15 or 20 min halves), register team rosters, and assign scorers with a single invitation code.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="bg-surface-900 border border-slate-800 rounded-2xl p-8 relative">
+          <span class="text-5xl font-black text-brand-500/20 absolute top-4 right-6 font-mono">02</span>
+          <div class="w-12 h-12 rounded-xl bg-brand-500/20 flex items-center justify-center text-brand-500 mb-6 font-bold text-lg">
+            2
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2 heading-font">Score Raid-by-Raid</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Tap to record raider touches, bonus crossings, empty raids, and tackles. Kabba Hub tracks the 30-second raid clock, Do-or-Die raids, and revivals automatically.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="bg-surface-900 border border-slate-800 rounded-2xl p-8 relative">
+          <span class="text-5xl font-black text-brand-500/20 absolute top-4 right-6 font-mono">03</span>
+          <div class="w-12 h-12 rounded-xl bg-brand-500/20 flex items-center justify-center text-brand-500 mb-6 font-bold text-lg">
+            3
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2 heading-font">Broadcast & Celebrate</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Scores stream live to fans worldwide. Players get permanent career stats, MVP badges, and tournament organizers get official PDF match reports.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Tournament Showcase Section -->
+  <section id="tournaments" class="py-24 bg-surface-900 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        
+        <div class="space-y-6">
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20">
+            <i data-lucide="shield" class="w-4 h-4 text-amber-500"></i> For Tournament Organizers
+          </span>
+          <h2 class="text-3xl sm:text-5xl font-black text-white heading-font tracking-tight">
+            Run World-Class Tournaments on Any Budget
+          </h2>
+          <p class="text-slate-300 text-base leading-relaxed">
+            Say goodbye to paper sheets, manual calculation errors, and disputed tie-breakers. Kabba Hub gives your local cup the exact same polish and transparency as pro leagues.
+          </p>
+          
+          <ul class="space-y-3 text-sm text-slate-300">
+            <li class="flex items-center gap-3">
+              <i data-lucide="check-circle-2" class="w-5 h-5 text-brand-500 shrink-0"></i>
+              <span>Automated league standings with points difference & bonus points.</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <i data-lucide="check-circle-2" class="w-5 h-5 text-brand-500 shrink-0"></i>
+              <span>Official referee and line umpire sign-off workflow.</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <i data-lucide="check-circle-2" class="w-5 h-5 text-brand-500 shrink-0"></i>
+              <span>Sponsor logo placement on live web scorecards and stream overlays.</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <i data-lucide="check-circle-2" class="w-5 h-5 text-brand-500 shrink-0"></i>
+              <span>Live leaderboards for Best Raider, Best Defender, and Player of the Match.</span>
+            </li>
+          </ul>
+
+          <div class="pt-4">
+            <a href="#download" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-brand-500 hover:bg-brand-600 text-white font-bold transition">
+              <span>Start Your Tournament Free</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Tournament Leaderboard Card Graphic -->
+        <div class="bg-surface-800 border border-slate-700 rounded-3xl p-6 shadow-2xl space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-700 pb-3">
+            <div>
+              <span class="text-xs text-brand-400 font-bold uppercase">Points Table &bull; Group A</span>
+              <h4 class="text-lg font-bold text-white heading-font">Tamil Nadu State Trophy 2026</h4>
+            </div>
+            <span class="px-2.5 py-1 rounded bg-surface-700 text-[11px] text-slate-300 font-mono">Round 4</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead>
+                <tr class="text-slate-400 border-b border-slate-700 font-semibold">
+                  <th class="py-2.5 pr-4">Team</th>
+                  <th class="py-2.5 px-2">P</th>
+                  <th class="py-2.5 px-2">W</th>
+                  <th class="py-2.5 px-2">L</th>
+                  <th class="py-2.5 px-2">Diff</th>
+                  <th class="py-2.5 pl-2 text-right">Pts</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800 text-slate-200">
+                <tr class="hover:bg-surface-700/40">
+                  <td class="py-3 pr-4 font-bold flex items-center gap-2">
+                    <span class="text-brand-400 font-mono">1</span>
+                    <span>Madurai Thunders</span>
+                  </td>
+                  <td class="py-3 px-2">4</td>
+                  <td class="py-3 px-2">4</td>
+                  <td class="py-3 px-2">0</td>
+                  <td class="py-3 px-2 text-emerald-400 font-mono">+28</td>
+                  <td class="py-3 pl-2 text-right font-black text-brand-400 font-mono text-sm">20</td>
+                </tr>
+                <tr class="hover:bg-surface-700/40">
+                  <td class="py-3 pr-4 font-bold flex items-center gap-2">
+                    <span class="text-brand-400 font-mono">2</span>
+                    <span>Salem Panthers</span>
+                  </td>
+                  <td class="py-3 px-2">4</td>
+                  <td class="py-3 px-2">3</td>
+                  <td class="py-3 px-2">1</td>
+                  <td class="py-3 px-2 text-emerald-400 font-mono">+14</td>
+                  <td class="py-3 pl-2 text-right font-black text-brand-400 font-mono text-sm">15</td>
+                </tr>
+                <tr class="hover:bg-surface-700/40">
+                  <td class="py-3 pr-4 font-bold flex items-center gap-2">
+                    <span class="text-slate-400 font-mono">3</span>
+                    <span>Tiruchi Bulls</span>
+                  </td>
+                  <td class="py-3 px-2">4</td>
+                  <td class="py-3 px-2">1</td>
+                  <td class="py-3 px-2">3</td>
+                  <td class="py-3 px-2 text-red-400 font-mono">-12</td>
+                  <td class="py-3 pl-2 text-right font-black text-slate-300 font-mono text-sm">7</td>
+                </tr>
+                <tr class="hover:bg-surface-700/40">
+                  <td class="py-3 pr-4 font-bold flex items-center gap-2">
+                    <span class="text-slate-400 font-mono">4</span>
+                    <span>Coimbatore Kings</span>
+                  </td>
+                  <td class="py-3 px-2">4</td>
+                  <td class="py-3 px-2">0</td>
+                  <td class="py-3 px-2">4</td>
+                  <td class="py-3 px-2 text-red-400 font-mono">-30</td>
+                  <td class="py-3 pl-2 text-right font-black text-slate-300 font-mono text-sm">2</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="bg-surface-900/80 p-3 rounded-xl flex items-center justify-between text-xs text-slate-400 border border-slate-700/60">
+            <span class="flex items-center gap-1.5">
+              <i data-lucide="file-down" class="w-4 h-4 text-brand-500"></i>
+              <span>Official Bracket Sheet</span>
+            </span>
+            <span class="text-brand-400 font-semibold cursor-pointer hover:underline">Export PDF &bull; 1.4 MB</span>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-24 bg-surface-950 border-t border-slate-800">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center mb-16 space-y-3">
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-brand-500/10 text-brand-400 border border-brand-500/20">
+          <i data-lucide="help-circle" class="w-4 h-4 text-brand-500"></i> Got Questions?
+        </span>
+        <h2 class="text-3xl sm:text-5xl font-black text-white heading-font tracking-tight">
+          Frequently Asked Questions
+        </h2>
+        <p class="text-slate-400 text-base">
+          Everything you need to know about Kabba Hub scoring and tournaments.
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        
+        <!-- FAQ 1 -->
+        <div class="bg-surface-900 border border-slate-800 rounded-2xl p-6">
+          <button class="faq-toggle w-full flex items-center justify-between text-left focus:outline-none">
+            <span class="text-lg font-bold text-white heading-font">What makes kabba hub the ultimate platform for Kabaddi?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-brand-500 transition-transform"></i>
+          </button>
+          <div class="faq-content hidden mt-4 text-sm text-slate-400 leading-relaxed pt-2 border-t border-slate-800/60">
+            kabba hub is purpose-built exclusively for Kabaddi. From real-time raid-by-raid touch points, bonus lines, and super tackles to automated player revivals, 30-second raid clocks, and tournament brackets, kabba hub eliminates manual calculation errors and gives grassroots tournaments professional-grade precision.
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="bg-surface-900 border border-slate-800 rounded-2xl p-6">
+          <button class="faq-toggle w-full flex items-center justify-between text-left focus:outline-none">
+            <span class="text-lg font-bold text-white heading-font">Does the app work offline if there is poor ground connectivity?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-brand-500 transition-transform"></i>
+          </button>
+          <div class="faq-content hidden mt-4 text-sm text-slate-400 leading-relaxed pt-2 border-t border-slate-800/60">
+            Absolutely. We built Kabba Hub with an offline-first architecture. Scorers on the mat can continue recording raids and tackles without internet. As soon as the device reconnects to Wi-Fi or mobile data, all points, revivals, and match clocks sync automatically to the cloud.
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="bg-surface-900 border border-slate-800 rounded-2xl p-6">
+          <button class="faq-toggle w-full flex items-center justify-between text-left focus:outline-none">
+            <span class="text-lg font-bold text-white heading-font">How are All-Outs (Lona) and player revivals calculated?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-brand-500 transition-transform"></i>
+          </button>
+          <div class="faq-content hidden mt-4 text-sm text-slate-400 leading-relaxed pt-2 border-t border-slate-800/60">
+            Kabba Hub strictly adheres to official Kabaddi rules. Whenever a touch point or tackle is scored, the app automatically determines who is out and revives benched players in the correct sequence. When the last player on a side is eliminated, the app awards 2 All-Out (Lona) points to the opponent and resets all 7 players onto the mat.
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="bg-surface-900 border border-slate-800 rounded-2xl p-6">
+          <button class="faq-toggle w-full flex items-center justify-between text-left focus:outline-none">
+            <span class="text-lg font-bold text-white heading-font">Can we display live scores on our YouTube live stream?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-brand-500 transition-transform"></i>
+          </button>
+          <div class="faq-content hidden mt-4 text-sm text-slate-400 leading-relaxed pt-2 border-t border-slate-800/60">
+            Yes! For every match, kabba hub generates a transparent web overlay URL. You can paste this URL directly into your broadcasting software as a browser source to show real-time broadcast score overlays with raid timers and player graphics.
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="bg-surface-900 border border-slate-800 rounded-2xl p-6">
+          <button class="faq-toggle w-full flex items-center justify-between text-left focus:outline-none">
+            <span class="text-lg font-bold text-white heading-font">How much does Kabba Hub cost to use?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-brand-500 transition-transform"></i>
+          </button>
+          <div class="faq-content hidden mt-4 text-sm text-slate-400 leading-relaxed pt-2 border-t border-slate-800/60">
+            Kabba Hub is 100% free for individual matches, player profiles, and local club scorekeeping. Optional premium features are available for large multi-day tournament organizers needing advanced live stream graphics, sponsor integrations, and custom branded tournament apps.
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Download CTA Banner Section -->
+  <section id="download" class="py-24 bg-surface-900 border-t border-slate-800 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      
+      <div class="rounded-3xl p-8 sm:p-14 bg-gradient-to-r from-brand-600 via-orange-600 to-amber-600 shadow-2xl relative overflow-hidden text-center lg:text-left">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          <div class="lg:col-span-8 space-y-4">
+            <h2 class="text-3xl sm:text-5xl font-black text-white heading-font tracking-tight">
+              Ready to Modernize Your Kabaddi Tournament?
+            </h2>
+            <p class="text-orange-100 text-base sm:text-lg max-w-2xl">
+              Download the Kabba Hub app today and join thousands of coaches, scorers, and athletes taking grassroots Kabaddi to the next level.
+            </p>
+            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
+              <a href="#" class="flex items-center gap-3 px-6 py-3.5 rounded-xl bg-black text-white hover:bg-slate-900 transition shadow-lg">
+                <i data-lucide="play" class="w-6 h-6 text-emerald-400 fill-emerald-400"></i>
+                <div class="text-left">
+                  <span class="block text-[10px] uppercase font-semibold text-slate-400">Download for</span>
+                  <span class="block text-sm font-bold text-white">Google Play</span>
+                </div>
+              </a>
+              <a href="#" class="flex items-center gap-3 px-6 py-3.5 rounded-xl bg-black text-white hover:bg-slate-900 transition shadow-lg">
+                <i data-lucide="apple" class="w-6 h-6 text-white fill-white"></i>
+                <div class="text-left">
+                  <span class="block text-[10px] uppercase font-semibold text-slate-400">Download for</span>
+                  <span class="block text-sm font-bold text-white">Apple iOS</span>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- QR Code Preview Graphic -->
+          <div class="lg:col-span-4 flex justify-center">
+            <div class="bg-white p-5 rounded-2xl shadow-xl text-center max-w-[200px]">
+              <div class="w-36 h-36 bg-slate-100 border border-slate-300 rounded-xl flex items-center justify-center mx-auto mb-2 text-slate-800">
+                <i data-lucide="qr-code" class="w-28 h-28 text-slate-900"></i>
+              </div>
+              <span class="text-xs font-bold text-slate-800 block">Scan to Install</span>
+              <span class="text-[10px] text-slate-500">iOS & Android</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-surface-950 border-t border-slate-800 pt-16 pb-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-800/80">
+        
+        <!-- Brand Info -->
+        <div class="lg:col-span-2 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-amber-500 flex items-center justify-center">
+              <i data-lucide="zap" class="w-5 h-5 text-white fill-white"></i>
+            </div>
+            <span class="text-2xl font-black text-white heading-font">KABBA <span class="text-brand-500">HUB</span></span>
+          </div>
+          <p class="text-sm text-slate-400 max-w-sm leading-relaxed">
+            The all-in-one digital live scoring, tournament management, and player analytics ecosystem for Kabaddi. Empowering local heroes, clubs, and sports fans everywhere.
+          </p>
+          <div class="flex items-center gap-3 pt-2 text-slate-400">
+            <a href="#" class="w-9 h-9 rounded-lg bg-surface-800 flex items-center justify-center hover:text-white hover:bg-brand-500 transition">
+              <i data-lucide="twitter" class="w-4 h-4"></i>
+            </a>
+            <a href="#" class="w-9 h-9 rounded-lg bg-surface-800 flex items-center justify-center hover:text-white hover:bg-brand-500 transition">
+              <i data-lucide="youtube" class="w-4 h-4"></i>
+            </a>
+            <a href="#" class="w-9 h-9 rounded-lg bg-surface-800 flex items-center justify-center hover:text-white hover:bg-brand-500 transition">
+              <i data-lucide="instagram" class="w-4 h-4"></i>
+            </a>
+            <a href="#" class="w-9 h-9 rounded-lg bg-surface-800 flex items-center justify-center hover:text-white hover:bg-brand-500 transition">
+              <i data-lucide="facebook" class="w-4 h-4"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="space-y-3">
+          <h4 class="text-sm font-bold text-white uppercase tracking-wider heading-font">Platform</h4>
+          <ul class="space-y-2 text-sm text-slate-400">
+            <li><a href="#features" class="hover:text-white transition">Raid Scorer</a></li>
+            <li><a href="#demo" class="hover:text-white transition">Live Demo</a></li>
+            <li><a href="#tournaments" class="hover:text-white transition">Tournaments</a></li>
+            <li><a href="#download" class="hover:text-white transition">OBS Streaming</a></li>
+            <li><a href="#download" class="hover:text-white transition">Player Cards</a></li>
+          </ul>
+        </div>
+
+        <!-- Resources -->
+        <div class="space-y-3">
+          <h4 class="text-sm font-bold text-white uppercase tracking-wider heading-font">Resources</h4>
+          <ul class="space-y-2 text-sm text-slate-400">
+            <li><a href="#faq" class="hover:text-white transition">Kabaddi Rules Guide</a></li>
+            <li><a href="#faq" class="hover:text-white transition">Scorer Training</a></li>
+            <li><a href="#tournaments" class="hover:text-white transition">PDF Scoresheets</a></li>
+            <li><a href="mailto:support@kabbahub.com" class="hover:text-white transition">Organizer Support</a></li>
+          </ul>
+        </div>
+
+        <!-- Legal & Compliance -->
+        <div class="space-y-3">
+          <h4 class="text-sm font-bold text-white uppercase tracking-wider heading-font">Legal & Safety</h4>
+          <ul class="space-y-2 text-sm text-slate-400">
+            <li><a href="privacy-policy.html" class="hover:text-white transition">Privacy Policy</a></li>
+            <li><a href="terms-of-use.html" class="hover:text-white transition">Terms of Use</a></li>
+            <li><a href="privacy-policy.html#section-6" class="hover:text-white transition">Account Deletion</a></li>
+            <li><a href="terms-of-use.html#section-3" class="hover:text-white transition">Fair Play Policy</a></li>
+            <li><a href="mailto:support@kabbahub.com" class="hover:text-white transition">Contact Us</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <p>&copy; 2026 Kabba Hub Technologies. All rights reserved.</p>
+        <p>Built with passion for grassroots and professional Kabaddi.</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+</body>
+</html>
