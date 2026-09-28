@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Sacramento&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Great+Vibes&family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&family=Sacramento&display=swap');
 
-/* Base Styles */
+/* Reset & Basics */
 * {
   margin: 0;
   padding: 0;
@@ -11,12 +11,17 @@
 body {
   font-family: 'Outfit', sans-serif;
   overflow-x: hidden;
-  background-color: #0d0614;
+  background-color: #08020e;
   color: #fff;
   min-height: 100vh;
+  user-select: none;
 }
 
 .script-font {
+  font-family: 'Great Vibes', cursive;
+}
+
+.hand-font {
   font-family: 'Caveat', cursive;
 }
 
@@ -24,13 +29,59 @@ body {
   font-family: 'Playfair Display', serif;
 }
 
-/* Ambient Romantic Glow & Stars */
-.romantic-bg {
-  background: radial-gradient(circle at 50% 20%, #2e0827 0%, #160724 45%, #08020e 100%);
+/* Luxury Aurora & Cosmic Mesh Background */
+.aurora-bg {
+  background: radial-gradient(ellipse at 50% -10%, #4a044e 0%, #1e0533 35%, #0d021a 70%, #05010a 100%);
   position: relative;
   overflow: hidden;
 }
 
+/* Animated Glowing Aurora Orbs */
+.aurora-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.45;
+  pointer-events: none;
+  animation: orbDrift 20s infinite alternate ease-in-out;
+}
+
+.aurora-orb-1 {
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, #f43f5e 0%, rgba(244, 63, 94, 0) 70%);
+  top: -100px;
+  left: 10%;
+  animation-duration: 16s;
+}
+
+.aurora-orb-2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #c026d3 0%, rgba(192, 38, 211, 0) 70%);
+  bottom: -150px;
+  right: 5%;
+  animation-duration: 22s;
+  animation-delay: -5s;
+}
+
+.aurora-orb-3 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, #fb7185 0%, rgba(251, 113, 133, 0) 70%);
+  top: 40%;
+  left: 60%;
+  animation-duration: 18s;
+  animation-delay: -8s;
+}
+
+@keyframes orbDrift {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(60px, 40px) scale(1.15); }
+  100% { transform: translate(-40px, 60px) scale(0.95); }
+}
+
+/* Twinkling Stars & Bokeh */
 .stars-container {
   position: fixed;
   inset: 0;
@@ -42,19 +93,19 @@ body {
   position: absolute;
   background: #fff;
   border-radius: 50%;
-  animation: twinkle var(--duration, 3s) infinite ease-in-out var(--delay, 0s);
+  animation: starTwinkle var(--duration, 3s) infinite ease-in-out var(--delay, 0s);
   opacity: 0.2;
 }
 
-@keyframes twinkle {
+@keyframes starTwinkle {
   0%, 100% {
-    opacity: 0.15;
-    transform: scale(0.8);
+    opacity: 0.1;
+    transform: scale(0.7);
   }
   50% {
-    opacity: 0.9;
-    transform: scale(1.3);
-    box-shadow: 0 0 8px rgba(255, 200, 220, 0.8);
+    opacity: 0.95;
+    transform: scale(1.4);
+    box-shadow: 0 0 10px rgba(255, 220, 240, 0.9);
   }
 }
 
@@ -67,262 +118,379 @@ body {
   z-index: 20;
 }
 
-/* Balloon Item */
+/* Ultra Glass Card with Moving Iridescent Border */
+.luxury-card {
+  background: rgba(26, 10, 40, 0.65);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 2.25rem;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.8),
+              0 0 40px rgba(244, 63, 94, 0.2),
+              inset 0 1px 1px rgba(255, 255, 255, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.luxury-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 2.35rem;
+  background: linear-gradient(135deg, rgba(244, 63, 94, 0.6), rgba(217, 70, 239, 0.2), rgba(251, 191, 36, 0.4), rgba(244, 63, 94, 0.1));
+  z-index: -1;
+  opacity: 0.75;
+  animation: borderRotate 8s linear infinite alternate;
+}
+
+@keyframes borderRotate {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(45deg); }
+}
+
+/* 3D Heart Crystal Centerpiece */
+.heart-crystal-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.heart-crystal {
+  width: 95px;
+  height: 95px;
+  filter: drop-shadow(0 0 25px rgba(244, 63, 94, 0.85));
+  animation: realHeartbeat 1.6s ease-in-out infinite;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.heart-crystal-wrapper:hover .heart-crystal {
+  transform: scale(1.22) rotate(-3deg);
+  filter: drop-shadow(0 0 45px rgba(255, 90, 140, 1));
+}
+
+@keyframes realHeartbeat {
+  0% { transform: scale(1); }
+  12% { transform: scale(1.18); }
+  24% { transform: scale(1.04); }
+  36% { transform: scale(1.25); }
+  55% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
+/* Orbiting Rings around Crystal */
+.orbit-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px dashed rgba(244, 63, 94, 0.4);
+  pointer-events: none;
+}
+
+.orbit-ring-1 {
+  width: 130px;
+  height: 130px;
+  animation: spinSlow 12s linear infinite;
+}
+
+.orbit-ring-2 {
+  width: 160px;
+  height: 160px;
+  border-color: rgba(251, 113, 133, 0.25);
+  animation: spinReverse 16s linear infinite;
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spinReverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+/* Grand "Click Me" Button */
+.grand-click-btn {
+  background: linear-gradient(135deg, #e11d48 0%, #ec4899 45%, #f43f5e 75%, #fb7185 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 4s ease infinite;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 35px rgba(225, 29, 72, 0.6),
+              0 0 25px rgba(236, 72, 153, 0.4),
+              inset 0 2px 3px rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.grand-click-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: rotate(30deg);
+  animation: buttonShine 3.5s infinite ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes buttonShine {
+  0% { left: -60%; }
+  35%, 100% { left: 140%; }
+}
+
+.grand-click-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 18px 50px rgba(225, 29, 72, 0.8),
+              0 0 40px rgba(236, 72, 153, 0.6),
+              inset 0 2px 4px rgba(255, 255, 255, 0.5);
+}
+
+.grand-click-btn:active {
+  transform: translateY(2px) scale(0.97);
+}
+
+/* Realistic 3D Balloon Styles */
 .floating-balloon {
   position: absolute;
-  bottom: -150px;
+  bottom: -180px;
   pointer-events: auto;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: transform 0.2s ease, filter 0.2s ease;
-  animation: floatUp var(--speed, 11s) linear forwards,
-             sway var(--sway-speed, 3.5s) ease-in-out infinite alternate;
+  transition: transform 0.25s ease, filter 0.25s ease;
+  animation: balloonAscend var(--speed, 12s) linear forwards,
+             balloonWiggle var(--sway-speed, 3.8s) ease-in-out infinite alternate;
   will-change: transform;
 }
 
 .floating-balloon:hover {
-  transform: scale(1.1) !important;
-  filter: drop-shadow(0 10px 25px rgba(255, 75, 120, 0.7));
+  transform: scale(1.15) !important;
+  filter: drop-shadow(0 12px 30px rgba(255, 60, 110, 0.8));
 }
 
 .balloon-body {
-  width: var(--balloon-width, 70px);
-  height: var(--balloon-height, 86px);
+  width: var(--b-width, 78px);
+  height: var(--b-height, 96px);
   border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
-  background: radial-gradient(circle at 35% 30%, var(--b-light, #ff85a2), var(--b-dark, #e11d48) 75%);
-  box-shadow: inset -6px -6px 12px rgba(0, 0, 0, 0.25),
-              0 8px 24px var(--b-shadow, rgba(225, 29, 72, 0.4));
+  background: radial-gradient(circle at 32% 28%, var(--b-light, #ff85a2), var(--b-dark, #e11d48) 75%);
+  box-shadow: inset -8px -8px 16px rgba(0, 0, 0, 0.3),
+              inset 3px 3px 8px rgba(255, 255, 255, 0.4),
+              0 12px 30px var(--b-shadow, rgba(225, 29, 72, 0.5));
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 6px;
+  padding: 8px;
   text-align: center;
 }
 
-/* Balloon Highlight Gloss */
+/* Heart-Shaped Balloon variant */
+.floating-balloon.heart-shape .balloon-body {
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  width: var(--b-width, 84px);
+  height: var(--b-height, 84px);
+}
+
+.floating-balloon.heart-shape .heart-balloon-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 10px 25px var(--b-shadow, rgba(225, 29, 72, 0.5)));
+}
+
+/* 3D Specular Highlight on Balloon */
 .balloon-body::before {
   content: '';
   position: absolute;
-  top: 12%;
-  left: 18%;
-  width: 24%;
-  height: 35%;
+  top: 10%;
+  left: 16%;
+  width: 26%;
+  height: 38%;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 80%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.05) 80%);
   transform: rotate(-25deg);
   pointer-events: none;
 }
 
-/* Balloon Knot */
 .balloon-knot {
-  width: 10px;
-  height: 7px;
+  width: 11px;
+  height: 8px;
   background: var(--b-dark, #e11d48);
   clip-path: polygon(0 100%, 100% 100%, 75% 0, 25% 0);
   margin-top: -1px;
 }
 
-/* Balloon String */
 .balloon-string {
   width: 2px;
-  height: 55px;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.15));
+  height: 60px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.1));
   transform-origin: top center;
-  animation: stringWave 2s ease-in-out infinite alternate;
+  animation: stringFlutter 2.5s ease-in-out infinite alternate;
 }
 
-@keyframes stringWave {
-  0% { transform: rotate(-5deg); }
-  100% { transform: rotate(5deg); }
+@keyframes stringFlutter {
+  0% { transform: rotate(-7deg) scaleX(1); }
+  50% { transform: rotate(0deg) scaleX(1.3); }
+  100% { transform: rotate(7deg) scaleX(1); }
 }
 
-/* Balloon Message Tag */
 .balloon-tag {
   font-family: 'Caveat', cursive;
   font-weight: 700;
   font-size: 15px;
-  line-height: 1.1;
+  line-height: 1.15;
   color: #fff;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
   user-select: none;
-  max-width: 90%;
+  max-width: 95%;
   word-break: break-word;
+  position: relative;
+  z-index: 2;
 }
 
 /* Floating Heart Item */
 .floating-heart {
   position: absolute;
-  bottom: -80px;
+  bottom: -90px;
   pointer-events: auto;
   cursor: pointer;
-  animation: floatUp var(--speed, 10s) linear forwards,
-             heartSway var(--sway-speed, 3s) ease-in-out infinite alternate,
-             pulse 1.8s ease-in-out infinite;
+  animation: balloonAscend var(--speed, 10s) linear forwards,
+             heartWiggle var(--sway-speed, 3.2s) ease-in-out infinite alternate;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  filter: drop-shadow(0 6px 18px rgba(244, 63, 94, 0.6));
+  filter: drop-shadow(0 8px 24px rgba(244, 63, 94, 0.7));
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
   will-change: transform;
 }
 
 .floating-heart:hover {
-  transform: scale(1.35) rotate(-5deg) !important;
-  filter: drop-shadow(0 0 25px rgba(255, 100, 150, 0.95));
+  transform: scale(1.4) rotate(-6deg) !important;
+  filter: drop-shadow(0 0 35px rgba(255, 100, 160, 1));
 }
 
 .floating-heart .heart-svg {
-  width: var(--heart-size, 52px);
-  height: var(--heart-size, 52px);
-  fill: url(#heartGradient);
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+  width: var(--heart-size, 54px);
+  height: var(--heart-size, 54px);
+  animation: heartPulseSubtle 1.8s ease-in-out infinite;
 }
 
-.floating-heart .heart-label {
-  margin-top: 4px;
-  background: rgba(255, 255, 255, 0.92);
+@keyframes heartPulseSubtle {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+
+.floating-heart .heart-badge {
+  margin-top: 5px;
+  background: linear-gradient(135deg, #ffffff, #ffe4e6);
   color: #e11d48;
   font-size: 11px;
-  font-weight: 800;
+  font-weight: 900;
   letter-spacing: 0.5px;
-  padding: 2px 7px;
+  padding: 3px 8px;
   border-radius: 999px;
   white-space: nowrap;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  animation: badgeBounce 1.5s infinite ease-in-out alternate;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(244, 63, 94, 0.3);
 }
 
-@keyframes badgeBounce {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-3px); }
-}
-
-/* Float & Sway Keyframes */
-@keyframes floatUp {
+/* Flight Physics */
+@keyframes balloonAscend {
   0% {
-    bottom: -120px;
+    bottom: -150px;
     opacity: 0;
   }
-  5% {
+  6% {
     opacity: 1;
   }
-  90% {
+  92% {
     opacity: 1;
   }
   100% {
-    bottom: 115vh;
+    bottom: 118vh;
     opacity: 0;
   }
 }
 
-@keyframes sway {
+@keyframes balloonWiggle {
   0% {
-    transform: translateX(calc(var(--sway-amp, 25px) * -1)) rotate(-6deg);
+    transform: translateX(calc(var(--sway-amp, 28px) * -1)) rotate(-8deg);
   }
   100% {
-    transform: translateX(var(--sway-amp, 25px)) rotate(6deg);
+    transform: translateX(var(--sway-amp, 28px)) rotate(8deg);
   }
 }
 
-@keyframes heartSway {
+@keyframes heartWiggle {
   0% {
-    transform: translateX(calc(var(--sway-amp, 35px) * -1)) rotate(-12deg);
+    transform: translateX(calc(var(--sway-amp, 38px) * -1)) rotate(-15deg);
   }
   100% {
-    transform: translateX(var(--sway-amp, 35px)) rotate(12deg);
+    transform: translateX(var(--sway-amp, 38px)) rotate(15deg);
   }
 }
 
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.12);
-  }
+/* Equalizer Bars for Music Player */
+.eq-bar {
+  width: 3px;
+  background: #f43f5e;
+  border-radius: 2px;
+  animation: eqBounce 1s infinite alternate ease-in-out;
+}
+.eq-bar:nth-child(1) { height: 8px; animation-delay: 0.1s; }
+.eq-bar:nth-child(2) { height: 16px; animation-delay: 0.3s; }
+.eq-bar:nth-child(3) { height: 12px; animation-delay: 0.2s; }
+.eq-bar:nth-child(4) { height: 18px; animation-delay: 0.4s; }
+
+@keyframes eqBounce {
+  0% { transform: scaleY(0.4); }
+  100% { transform: scaleY(1.3); }
 }
 
-/* Glow & Shimmer Effects */
-.love-glow {
-  text-shadow: 0 0 20px rgba(244, 63, 94, 0.7),
-               0 0 40px rgba(244, 63, 94, 0.4);
-}
-
-.glow-btn {
-  box-shadow: 0 0 35px rgba(244, 63, 94, 0.5),
-              0 10px 30px rgba(0, 0, 0, 0.4);
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.glow-btn:hover {
-  transform: translateY(-3px) scale(1.04);
-  box-shadow: 0 0 50px rgba(244, 63, 94, 0.8),
-              0 15px 40px rgba(0, 0, 0, 0.5);
-}
-
-.glow-btn:active {
-  transform: translateY(1px) scale(0.97);
-}
-
-/* Big Interactive Center Heart Button */
-.big-heart-btn {
-  animation: heartThrob 1.4s ease-in-out infinite;
-  filter: drop-shadow(0 0 25px rgba(244, 63, 94, 0.6));
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-.big-heart-btn:hover {
-  transform: scale(1.15) !important;
-  filter: drop-shadow(0 0 40px rgba(244, 63, 94, 0.9));
-}
-
-@keyframes heartThrob {
-  0%, 100% {
-    transform: scale(1);
-  }
-  14% {
-    transform: scale(1.15);
-  }
-  28% {
-    transform: scale(1);
-  }
-  42% {
-    transform: scale(1.12);
-  }
-  70% {
-    transform: scale(1);
-  }
-}
-
-/* Confetti Burst Particle */
-.confetti-particle {
+/* Tap Ripple Particles on Screen Click */
+.tap-heart-particle {
   position: fixed;
   pointer-events: none;
-  border-radius: 50%;
-  animation: particlePop var(--time, 1s) ease-out forwards;
+  font-size: var(--size, 22px);
+  animation: tapHeartFly 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
   z-index: 9999;
 }
 
-@keyframes particlePop {
+@keyframes tapHeartFly {
   0% {
     opacity: 1;
-    transform: translate(0, 0) scale(1);
+    transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% - var(--dy, 60px))) scale(1.2) rotate(var(--rot, 20deg));
   }
   100% {
     opacity: 0;
-    transform: translate(var(--tx), var(--ty)) scale(0.3) rotate(var(--rot, 360deg));
+    transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% - var(--dy, 120px))) scale(0.8) rotate(var(--rot, 45deg));
   }
 }
 
-/* Modal Animation */
+/* Photo Modal Backdrop & Card Animation */
 .modal-backdrop {
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.45s ease;
 }
 
 .modal-backdrop.active {
@@ -330,9 +498,9 @@ body {
 }
 
 .modal-content-card {
-  transform: scale(0.7) translateY(40px);
+  transform: scale(0.65) translateY(60px);
   opacity: 0;
-  transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .modal-backdrop.active .modal-content-card {
@@ -340,23 +508,23 @@ body {
   opacity: 1;
 }
 
-/* Glassmorphism Card */
-.glass-card {
-  background: rgba(22, 10, 36, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(244, 63, 94, 0.25);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+/* Polaroid / Ornate Photo Frame */
+.polaroid-frame {
+  background: #ffffff;
+  padding: 10px 10px 18px 10px;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7),
+              0 0 25px rgba(244, 63, 94, 0.35);
+  transform: rotate(-1.5deg);
+  transition: transform 0.4s ease;
 }
 
-/* Custom Scrollbar for Modal if needed */
-::-webkit-scrollbar {
-  width: 6px;
+.polaroid-frame:hover {
+  transform: rotate(0deg) scale(1.02);
 }
-::-webkit-scrollbar-track {
-  background: #0d0614;
-}
-::-webkit-scrollbar-thumb {
-  background: #e11d48;
-  border-radius: 3px;
+
+/* Love Glows */
+.text-glow {
+  text-shadow: 0 0 15px rgba(244, 63, 94, 0.8),
+               0 0 30px rgba(244, 63, 94, 0.4);
 }

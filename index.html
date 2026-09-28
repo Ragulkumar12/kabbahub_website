@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>A Special Surprise For You ❤️</title>
-  <meta name="description" content="A special love & sorry surprise with balloons, hearts, and a birthday dedication.">
+  <title>To My Dearest Pondati ❤️ | Happy Birthday &amp; I'm Sorry</title>
+  <meta name="description" content="A special interactive romantic experience for my Pondati with floating balloons, hearts, and a birthday surprise.">
 
   <!-- Mobile Theme & PWA -->
-  <meta name="theme-color" content="#0d0614">
+  <meta name="theme-color" content="#08020e">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -18,81 +18,114 @@
   <!-- Custom Styles -->
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="romantic-bg min-h-screen flex flex-col justify-between selection:bg-rose-500 selection:text-white relative overflow-hidden">
+<body class="aurora-bg min-h-screen flex flex-col justify-between selection:bg-rose-500 selection:text-white relative overflow-hidden">
 
-  <!-- Twinkling Stars Background -->
+  <!-- Ambient Glowing Aurora Orbs -->
+  <div class="aurora-orb aurora-orb-1"></div>
+  <div class="aurora-orb aurora-orb-2"></div>
+  <div class="aurora-orb aurora-orb-3"></div>
+
+  <!-- Twinkling Starlight Canvas -->
   <div id="starsContainer" class="stars-container"></div>
 
-  <!-- Floating Balloons and Hearts Container -->
+  <!-- Container for Rising Balloons & Floating Hearts -->
   <div id="floatContainer"></div>
 
-  <!-- Header / Controls Bar -->
-  <header class="relative z-30 w-full px-4 py-4 flex items-center justify-between max-w-5xl mx-auto">
-    <div class="flex items-center gap-2">
-      <span class="text-2xl animate-pulse">💖</span>
-      <span class="script-font text-2xl sm:text-3xl font-bold text-rose-300 tracking-wide text-shadow">Forever Yours</span>
+  <!-- Top Glass Navigation Bar -->
+  <header class="relative z-30 w-full px-4 sm:px-8 py-4 sm:py-5 flex items-center justify-between max-w-6xl mx-auto">
+    <!-- Brand / Monogram -->
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-rose-600 to-pink-400 p-[1px] shadow-lg shadow-rose-500/30 flex items-center justify-center">
+        <div class="w-full h-full rounded-full bg-[#120420] flex items-center justify-center text-sm font-black text-rose-300">
+          💍
+        </div>
+      </div>
+      <div>
+        <span class="script-font text-2xl sm:text-3xl text-rose-200 tracking-wide font-bold block leading-none">Forever Yours</span>
+        <span class="text-[10px] sm:text-xs text-rose-300/60 uppercase tracking-widest block font-semibold mt-0.5">My Pondati &bull; My Everything</span>
+      </div>
     </div>
 
-    <!-- Music Toggle Button -->
-    <button id="musicToggleBtn" class="glass-card text-xs sm:text-sm font-medium px-4 py-2 rounded-full border border-rose-500/30 text-rose-200 hover:text-white flex items-center gap-2 transition hover:bg-rose-500/20 active:scale-95 shadow-lg">
-      <span id="musicIcon" class="text-base">🎵</span>
-      <span id="musicLabel">Play Music</span>
+    <!-- Music Player Controls with Visualizer -->
+    <button id="musicToggleBtn" class="luxury-card px-4 py-2 sm:px-5 sm:py-2.5 rounded-full border border-rose-500/30 text-rose-200 hover:text-white flex items-center gap-2.5 transition active:scale-95 cursor-pointer shadow-lg hover:border-rose-400">
+      <div id="musicEq" class="hidden flex items-end gap-1 h-4">
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+      </div>
+      <span id="musicIcon" class="text-base sm:text-lg">🎵</span>
+      <span id="musicLabel" class="text-xs sm:text-sm font-semibold tracking-wide">Play Music</span>
     </button>
   </header>
 
-  <!-- Main Center Experience -->
-  <main class="relative z-30 flex-1 flex items-center justify-center px-4 py-6">
-    <div class="glass-card rounded-3xl p-6 sm:p-10 max-w-lg w-full text-center space-y-6 relative overflow-hidden shadow-2xl border border-rose-500/30">
+  <!-- Central Luxury Experience Card -->
+  <main class="relative z-30 flex-1 flex items-center justify-center px-4 py-4 sm:py-8">
+    <div class="luxury-card p-6 sm:p-12 max-w-xl w-full text-center space-y-7 relative overflow-hidden">
       
-      <!-- Ambient Card Glow -->
-      <div class="absolute -top-24 -left-24 w-48 h-48 bg-rose-500/20 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="absolute -bottom-24 -right-24 w-48 h-48 bg-pink-500/20 rounded-full blur-3xl pointer-events-none"></div>
-
-      <!-- Top Romantic Badge -->
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-500/20 border border-rose-500/30 text-rose-300 text-xs sm:text-sm font-semibold tracking-wide">
-        <span>✨</span>
-        <span>A Special Message For You</span>
-        <span>✨</span>
+      <!-- Top Decorative Pill -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-500/15 border border-rose-400/30 text-rose-200 text-xs sm:text-sm font-semibold tracking-wider uppercase shadow-inner">
+        <span class="text-rose-400">✨</span>
+        <span>A Heartfelt Apology &amp; Birthday Wish</span>
+        <span class="text-rose-400">✨</span>
       </div>
 
-      <!-- Center Pulsating Heart Trigger (Can also be clicked directly!) -->
-      <div class="py-2">
-        <button id="centerHeartBtn" class="big-heart-btn inline-block focus:outline-none" title="Tap to open surprise!">
-          <div class="relative flex items-center justify-center">
-            <svg class="w-24 h-24 sm:w-28 sm:h-28 fill-rose-500 filter drop-shadow-[0_0_20px_rgba(244,63,94,0.8)]" viewBox="0 0 24 24">
+      <!-- 3D Heart Crystal Centerpiece (Interactive Trigger) -->
+      <div class="py-2 flex justify-center">
+        <div id="centerHeartBtn" class="heart-crystal-wrapper group" title="Touch this heart to reveal surprise!">
+          <div class="orbit-ring orbit-ring-1"></div>
+          <div class="orbit-ring orbit-ring-2"></div>
+          
+          <div class="heart-crystal relative flex items-center justify-center">
+            <svg class="w-full h-full fill-rose-500" viewBox="0 0 24 24">
               <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
             </svg>
-            <span class="absolute text-white font-bold text-xs sm:text-sm tracking-wider uppercase script-font text-base sm:text-lg">Tap Me</span>
+            <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+              <span class="text-white text-[10px] uppercase font-black tracking-widest mt-1 opacity-90">TAP ME</span>
+              <span class="text-white text-xs">💖</span>
+            </div>
           </div>
-        </button>
+        </div>
       </div>
 
-      <!-- Headings -->
+      <!-- Main Headline with Elegant Calligraphy & Serif -->
       <div class="space-y-2">
-        <h1 class="serif-font text-3xl sm:text-4xl lg:text-5xl font-bold text-rose-100 leading-tight">
-          To My Dearest <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-pink-300 to-amber-200">Pondati</span> ❤️
+        <h1 class="serif-font text-3xl sm:text-5xl font-black text-rose-50 leading-tight">
+          To My Dearest <br class="sm:hidden">
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-pink-300 to-amber-200 text-glow">
+            Pondati
+          </span> ❤️
         </h1>
-        <p class="text-sm sm:text-base text-rose-200/80 max-w-sm mx-auto">
-          I made this little space just for you. Touch the button below to see the magic flow!
+        <p class="text-sm sm:text-base text-rose-200/80 max-w-md mx-auto leading-relaxed font-light pt-1">
+          I am truly and deeply sorry for making you upset. You mean the whole universe to me. Please touch the button below to see my love for you!
         </p>
       </div>
 
-      <!-- The Core "Click Me" Button -->
-      <div class="pt-2 space-y-3">
-        <button id="clickMeBtn" class="glow-btn w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-5 rounded-full bg-gradient-to-r from-rose-500 via-pink-500 to-red-500 hover:from-rose-600 hover:via-pink-600 hover:to-red-600 text-white font-black text-lg sm:text-2xl shadow-2xl flex items-center justify-center gap-3 mx-auto transition-transform active:scale-95 cursor-pointer">
-          <span class="text-2xl sm:text-3xl animate-bounce">✨</span>
+      <!-- The Grand "Click Me" Button -->
+      <div class="space-y-4 pt-1">
+        <button id="clickMeBtn" class="grand-click-btn w-full sm:w-auto px-10 sm:px-14 py-4 sm:py-5 rounded-full text-white font-extrabold text-xl sm:text-2xl shadow-2xl flex items-center justify-center gap-3.5 mx-auto cursor-pointer">
+          <span class="text-2xl sm:text-3xl animate-bounce">🎈</span>
           <span class="tracking-wide">Click Me</span>
           <span class="text-2xl sm:text-3xl animate-bounce">❤️</span>
         </button>
 
-        <!-- Status & Guidance -->
-        <p id="hintText" class="text-xs sm:text-sm text-rose-300/80 font-medium transition-all">
-          🎈 Click to release the <span class="text-rose-300 font-bold">Sorry &amp; Love You</span> balloons! 🎈
-        </p>
-        
-        <div id="flowCountBadge" class="hidden inline-block text-xs font-bold text-pink-300 bg-pink-950/60 px-3 py-1 rounded-full border border-pink-500/30">
-          Floating
+        <!-- Dynamic Status Ticker -->
+        <div class="space-y-1">
+          <p id="hintText" class="text-xs sm:text-sm text-rose-200/90 font-medium">
+            Touch <span class="font-bold text-rose-300">Click Me</span> to release the <span class="text-pink-300 font-bold">Sorry &amp; Love You</span> balloons! 🎈
+          </p>
+          <div id="balloonCounterWrapper" class="hidden inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/20 border border-rose-500/30 text-rose-200 text-xs font-bold mt-1">
+            <span class="w-2 h-2 rounded-full bg-rose-400 animate-ping"></span>
+            <span id="balloonCounterText">8 Balloons Floating</span>
+          </div>
         </div>
+      </div>
+
+      <!-- Quick Guidance Pill -->
+      <div class="pt-2 border-t border-rose-500/20 flex items-center justify-center gap-2 text-xs text-rose-300/70">
+        <span>👉</span>
+        <span>Tap <strong>ANY</strong> rising heart to unlock your special surprise photo!</span>
+        <span>👈</span>
       </div>
 
     </div>
@@ -100,56 +133,74 @@
 
   <!-- Footer -->
   <footer class="relative z-30 w-full px-4 py-3 text-center text-xs text-rose-300/50">
-    Made with infinite love &bull; Tap any floating heart to view your photo surprise
+    Made with unconditional love &bull; Happy Birthday to my favorite human ❤️
   </footer>
 
-  <!-- Surprise Photo Modal (Revealed when a Heart is Clicked) -->
-  <div id="photoModal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md hidden">
+  <!-- Grand Photo Reveal Modal -->
+  <div id="photoModal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-xl hidden">
     
-    <div class="modal-content-card glass-card rounded-3xl p-4 sm:p-7 max-w-md w-full border border-rose-500/40 relative shadow-2xl text-center space-y-4 max-h-[92vh] overflow-y-auto">
+    <div class="modal-content-card luxury-card p-4 sm:p-8 max-w-lg w-full relative shadow-2xl text-center space-y-5 max-h-[94vh] overflow-y-auto">
       
       <!-- Close Button -->
-      <button id="closeModalBtn" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/10 hover:bg-rose-500/40 text-white font-bold flex items-center justify-center transition border border-white/20 active:scale-90 z-20" title="Close">
+      <button id="closeModalBtn" class="absolute top-4 right-4 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 hover:bg-rose-500/60 text-white font-bold flex items-center justify-center transition border border-white/20 active:scale-90 z-20 cursor-pointer" title="Close">
         ✕
       </button>
 
       <!-- Romantic Header Badge -->
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/20 border border-rose-500/30 text-rose-300 text-xs font-semibold">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-500/20 border border-rose-500/30 text-rose-200 text-xs sm:text-sm font-bold">
         <span>🎉</span>
-        <span>A Beautiful Memory Together</span>
+        <span>My Most Cherished Memory With You</span>
         <span>💖</span>
       </div>
 
-      <!-- The Surprise Image Frame -->
-      <div class="relative overflow-hidden rounded-2xl shadow-2xl border-2 border-rose-400/50 bg-black/40 p-1 group">
-        <img 
-          src="birthday_surprise.jpg" 
-          alt="Happy Birthday to my Pondati" 
-          class="w-full h-auto max-h-[58vh] object-contain rounded-xl mx-auto shadow-lg transition-transform duration-500 group-hover:scale-[1.02]"
-        >
+      <!-- The Polaroid Photo Frame -->
+      <div class="polaroid-frame mx-auto max-w-sm">
+        <div class="overflow-hidden rounded-lg bg-black relative shadow-inner">
+          <img 
+            src="birthday_surprise.jpg" 
+            alt="Happy Birthday to my Pondati" 
+            class="w-full h-auto max-h-[52vh] object-contain rounded-lg mx-auto"
+          >
+        </div>
+        <div class="pt-3 pb-1 text-slate-800">
+          <p class="hand-font text-xl sm:text-2xl font-bold tracking-wide">
+            Happy Birthday to my Pondati ❤️
+          </p>
+        </div>
       </div>
 
-      <!-- Warm Love & Sorry Message -->
-      <div class="space-y-2 pt-1">
-        <h3 class="serif-font text-xl sm:text-2xl font-bold text-rose-200">
-          Happy Birthday to my Pondati ❤️
+      <!-- Apology & Love Letter -->
+      <div class="space-y-2 pt-1 px-2">
+        <h3 class="serif-font text-2xl font-bold text-rose-100">
+          I Am So Deeply Sorry, My Pondati 🥺❤️
         </h3>
-        <p class="text-xs sm:text-sm text-rose-100/90 leading-relaxed font-light px-2">
-          I am so deeply sorry from the bottom of my heart. You are my greatest blessing, my happiness, and my forever. I love you so much! 💕
+        <p class="text-xs sm:text-sm text-rose-100/90 leading-relaxed font-light">
+          No matter what happens, you are my home, my joy, and my forever love. Please forgive me for my mistakes. Today is your special day, and all I wish is to see your beautiful smile again! 💕
         </p>
       </div>
 
-      <!-- Action Buttons -->
-      <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-2.5">
-        <button id="modalFlowBtn" class="w-full sm:w-auto px-6 py-2.5 rounded-full bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-bold text-sm shadow-lg glow-btn flex items-center justify-center gap-2 transition active:scale-95">
-          <span>Release More Balloons 🎈</span>
+      <!-- Interactive Forgiveness Celebration Button -->
+      <div id="forgiveSection" class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <button id="forgiveBtn" class="w-full sm:w-auto px-6 py-3 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-black text-sm shadow-xl flex items-center justify-center gap-2 transition active:scale-95 cursor-pointer">
+          <span>💖</span>
+          <span>I Forgive You!</span>
+          <span>✨</span>
         </button>
+
+        <button id="modalFlowBtn" class="w-full sm:w-auto px-6 py-3 rounded-full bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-bold text-sm shadow-xl flex items-center justify-center gap-2 transition active:scale-95 cursor-pointer">
+          <span>Release 50 More Balloons 🎈</span>
+        </button>
+      </div>
+
+      <!-- Celebration Toast Message (Shown when "I Forgive You" is clicked) -->
+      <div id="forgiveCelebration" class="hidden p-3 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 text-emerald-200 text-xs sm:text-sm font-bold animate-bounce">
+        🥰 Yayyy! Thank you my sweet Pondati! I love you with all my heart forever and always! 💍🌹
       </div>
 
     </div>
   </div>
 
-  <!-- JavaScript Logic -->
+  <!-- JavaScript Engine -->
   <script src="script.js"></script>
 </body>
 </html>
