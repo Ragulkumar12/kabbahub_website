@@ -204,7 +204,7 @@ const balloonMessages = [
   "Love You Pondati ❤️",
   "Please Forgive Me 🙏",
   "You Are My World 🌍",
-  "Happy Birthday Love 🎂",
+  "I'm Truly Sorry 🥺",
   "Love You Forever 💕",
   "My Heart Is Yours 💓",
   "My Cutie Pondati 🌸",
@@ -212,6 +212,7 @@ const balloonMessages = [
   "I'm Really Sorry 🥺",
   "You Mean Everything ✨",
   "Love You Beyond Words 💖",
+  "Forgive Me Please 🙏",
   "My Queen 👑",
   "Can't Stay Without You 🥺",
   "Always Yours 💍"
