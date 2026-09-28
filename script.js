@@ -1,579 +1,591 @@
-// Web Audio API Synthesizer (No external dependencies needed)
-let audioCtx = null;
+/**
+ * Kabba Hub - Interactive Kabaddi Live Scoreboard & Portal Scripts
+ */
 
-function getAudioContext() {
-  if (!audioCtx) {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (AudioContext) {
-      audioCtx = new AudioContext();
-    }
-  }
-  if (audioCtx && audioCtx.state === 'suspended') {
-    audioCtx.resume();
-  }
-  return audioCtx;
-}
-
-// Crisp, gentle click/pop sound
-function playClickSound() {
-  try {
-    const ctx = getAudioContext();
-    if (!ctx) return;
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(659.25, ctx.currentTime); // E5
-    osc.frequency.exponentialRampToValueAtTime(987.77, ctx.currentTime + 0.12); // B5
-    
-    gain.gain.setValueAtTime(0.18, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.22);
-    
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    
-    osc.start();
-    osc.stop(ctx.currentTime + 0.22);
-  } catch (e) {}
-}
-
-// Romantic harp chime when heart is tapped
-function playHeartChime() {
-  try {
-    const ctx = getAudioContext();
-    if (!ctx) return;
-    
-    // Romantic Arpeggio: F4, A4, C5, E5, G5, C6
-    const notes = [349.23, 440.00, 523.25, 659.25, 783.99, 1046.50];
-    notes.forEach((freq, idx) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, ctx.currentTime + idx * 0.05);
-      
-      gain.gain.setValueAtTime(0.12, ctx.currentTime + idx * 0.05);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.05 + 0.55);
-      
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      
-      osc.start(ctx.currentTime + idx * 0.05);
-      osc.stop(ctx.currentTime + idx * 0.05 + 0.55);
-    });
-  } catch (e) {}
-}
-
-// Celebration chime for "I Forgive You!"
-function playCelebrationSound() {
-  try {
-    const ctx = getAudioContext();
-    if (!ctx) return;
-    
-    const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51, 1567.98];
-    notes.forEach((freq, idx) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(freq, ctx.currentTime + idx * 0.08);
-      
-      gain.gain.setValueAtTime(0.15, ctx.currentTime + idx * 0.08);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.08 + 0.8);
-      
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      
-      osc.start(ctx.currentTime + idx * 0.08);
-      osc.stop(ctx.currentTime + idx * 0.08 + 0.8);
-    });
-  } catch (e) {}
-}
-
-// Ambient Romantic Music Box
-let isMusicPlaying = false;
-let musicInterval = null;
-const melodyNotes = [
-  523.25, 587.33, 659.25, 783.99, 880.00,
-  1046.50, 880.00, 783.99, 659.25, 587.33,
-  523.25, 659.25, 783.99, 1046.50, 1174.66, 1318.51
-];
-let noteStep = 0;
-
-function toggleMusic() {
-  const btn = document.getElementById('musicToggleBtn');
-  const icon = document.getElementById('musicIcon');
-  const label = document.getElementById('musicLabel');
-  const eq = document.getElementById('musicEq');
-  
-  if (isMusicPlaying) {
-    clearInterval(musicInterval);
-    isMusicPlaying = false;
-    if (icon) icon.textContent = '🎵';
-    if (label) label.textContent = 'Play Music';
-    if (eq) eq.classList.add('hidden');
-    if (btn) btn.classList.remove('border-rose-400', 'bg-rose-500/25');
-  } else {
-    getAudioContext();
-    isMusicPlaying = true;
-    if (icon) icon.textContent = '🎶';
-    if (label) label.textContent = 'Music Playing';
-    if (eq) eq.classList.remove('hidden');
-    if (btn) btn.classList.add('border-rose-400', 'bg-rose-500/25');
-    
-    musicInterval = setInterval(() => {
-      try {
-        const ctx = getAudioContext();
-        if (!ctx) return;
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(melodyNotes[noteStep % melodyNotes.length], ctx.currentTime);
-        
-        gain.gain.setValueAtTime(0.07, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.65);
-        
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        
-        osc.start();
-        osc.stop(ctx.currentTime + 0.65);
-        noteStep++;
-      } catch (e) {}
-    }, 420);
-  }
-}
-
-// Background Twinkling Starlight
-function createStars() {
-  const container = document.getElementById('starsContainer');
-  if (!container) return;
-  
-  const starCount = 90;
-  for (let i = 0; i < starCount; i++) {
-    const star = document.createElement('div');
-    star.className = 'star';
-    const size = Math.random() * 2.8 + 1;
-    star.style.width = `${size}px`;
-    star.style.height = `${size}px`;
-    star.style.left = `${Math.random() * 100}%`;
-    star.style.top = `${Math.random() * 100}%`;
-    star.style.setProperty('--duration', `${Math.random() * 3 + 2.5}s`);
-    star.style.setProperty('--delay', `${Math.random() * 3.5}s`);
-    container.appendChild(star);
-  }
-}
-
-// Screen Tap Ripple Mini Hearts
-document.addEventListener('click', (e) => {
-  // Ignore clicks on buttons/inputs/modal
-  if (e.target.closest('button') || e.target.closest('#photoModal') || e.target.closest('.floating-balloon') || e.target.closest('.floating-heart')) {
-    return;
-  }
-  
-  const hearts = ['❤️', '💖', '💕', '✨', '🌸', '🌹'];
-  const char = hearts[Math.floor(Math.random() * hearts.length)];
-  const p = document.createElement('div');
-  p.className = 'tap-heart-particle';
-  p.textContent = char;
-  p.style.left = `${e.clientX}px`;
-  p.style.top = `${e.clientY}px`;
-  p.style.setProperty('--size', `${Math.random() * 12 + 18}px`);
-  p.style.setProperty('--dx', `${Math.random() * 60 - 30}px`);
-  p.style.setProperty('--dy', `${Math.random() * 60 + 60}px`);
-  p.style.setProperty('--rot', `${Math.random() * 60 - 30}deg`);
-  
-  document.body.appendChild(p);
-  setTimeout(() => p.remove(), 1200);
-});
-
-// Balloon Palettes & Messages
-const balloonPalettes = [
-  { light: '#ff85a2', dark: '#e11d48', shadow: 'rgba(225, 29, 72, 0.5)' },  // Rose
-  { light: '#f472b6', dark: '#db2777', shadow: 'rgba(219, 39, 119, 0.5)' }, // Pink Velvet
-  { light: '#fb7185', dark: '#be123c', shadow: 'rgba(244, 63, 94, 0.5)' },  // Ruby
-  { light: '#c084fc', dark: '#9333ea', shadow: 'rgba(147, 51, 234, 0.5)' }, // Lavender Silk
-  { light: '#fca5a5', dark: '#ef4444', shadow: 'rgba(239, 68, 68, 0.5)' },  // Crimson
-  { light: '#fde047', dark: '#ea580c', shadow: 'rgba(234, 88, 12, 0.5)' },  // Champagne Gold
-  { light: '#fbcfe8', dark: '#f43f5e', shadow: 'rgba(244, 63, 94, 0.5)' },  // Pastel Rose
-];
-
-const balloonMessages = [
-  "I'm So Sorry Paa 🥺",
-  "Love You Pondati ❤️",
-  "Please Forgive Me 🙏",
-  "You Are My World 🌍",
-  "I'm Truly Sorry 🥺",
-  "Love You Forever 💕",
-  "My Heart Is Yours 💓",
-  "My Cutie Pondati 🌸",
-  "Forever & Always 🌹",
-  "I'm Really Sorry 🥺",
-  "You Mean Everything ✨",
-  "Love You Beyond Words 💖",
-  "Forgive Me Please 🙏",
-  "My Queen 👑",
-  "Can't Stay Without You 🥺",
-  "Always Yours 💍"
-];
-
-let totalBalloonsReleased = 0;
-
-function updateBalloonCounter() {
-  const wrapper = document.getElementById('balloonCounterWrapper');
-  const text = document.getElementById('balloonCounterText');
-  if (wrapper && text) {
-    wrapper.classList.remove('hidden');
-    text.textContent = `${totalBalloonsReleased} Floating with Love`;
-  }
-}
-
-// Spawn a 3D Floating Balloon
-function spawnBalloon() {
-  const container = document.getElementById('floatContainer');
-  if (!container) return;
-  
-  const balloon = document.createElement('div');
-  const isHeartShape = Math.random() > 0.6;
-  balloon.className = `floating-balloon ${isHeartShape ? 'heart-shape' : ''}`;
-  
-  const palette = balloonPalettes[Math.floor(Math.random() * balloonPalettes.length)];
-  const msg = balloonMessages[Math.floor(Math.random() * balloonMessages.length)];
-  
-  const width = Math.floor(Math.random() * 20 + 72); // 72px - 92px
-  const height = isHeartShape ? width : Math.floor(width * 1.25);
-  const leftPos = Math.random() * 88 + 4; // 4% to 92%
-  const speed = Math.random() * 5 + 9.5; // 9.5s - 14.5s
-  const swaySpeed = Math.random() * 1.8 + 3.2;
-  const swayAmp = Math.floor(Math.random() * 26 + 18);
-  
-  balloon.style.left = `${leftPos}%`;
-  balloon.style.setProperty('--b-width', `${width}px`);
-  balloon.style.setProperty('--b-height', `${height}px`);
-  balloon.style.setProperty('--b-light', palette.light);
-  balloon.style.setProperty('--b-dark', palette.dark);
-  balloon.style.setProperty('--b-shadow', palette.shadow);
-  balloon.style.setProperty('--speed', `${speed}s`);
-  balloon.style.setProperty('--sway-speed', `${swaySpeed}s`);
-  balloon.style.setProperty('--sway-amp', `${swayAmp}px`);
-  
-  if (isHeartShape) {
-    balloon.innerHTML = `
-      <div class="balloon-body">
-        <svg class="heart-balloon-svg" viewBox="0 0 24 24">
-          <path fill="${palette.dark}" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-        </svg>
-        <span class="balloon-tag">${msg}</span>
-      </div>
-      <div class="balloon-knot"></div>
-      <div class="balloon-string"></div>
-    `;
-  } else {
-    balloon.innerHTML = `
-      <div class="balloon-body">
-        <span class="balloon-tag">${msg}</span>
-      </div>
-      <div class="balloon-knot"></div>
-      <div class="balloon-string"></div>
-    `;
-  }
-  
-  // Popping balloon
-  balloon.addEventListener('click', (e) => {
-    e.stopPropagation();
-    popElement(balloon, e.clientX, e.clientY);
-  });
-  
-  container.appendChild(balloon);
-  totalBalloonsReleased++;
-  updateBalloonCounter();
-  
-  setTimeout(() => {
-    if (balloon.parentNode) {
-      balloon.parentNode.removeChild(balloon);
-    }
-  }, speed * 1000);
-}
-
-// Spawn a Floating Heart (Clicking opens image)
-function spawnHeart(isSpecial = false) {
-  const container = document.getElementById('floatContainer');
-  if (!container) return;
-  
-  const heart = document.createElement('div');
-  heart.className = 'floating-heart';
-  
-  const size = isSpecial ? 76 : Math.floor(Math.random() * 26 + 48); // 48px - 74px
-  const leftPos = isSpecial ? (Math.random() * 60 + 20) : (Math.random() * 88 + 5);
-  const speed = isSpecial ? (Math.random() * 3 + 9) : (Math.random() * 4 + 8.5);
-  const swaySpeed = Math.random() * 1.5 + 2.8;
-  const swayAmp = Math.floor(Math.random() * 30 + 20);
-  
-  heart.style.left = `${leftPos}%`;
-  heart.style.setProperty('--heart-size', `${size}px`);
-  heart.style.setProperty('--speed', `${speed}s`);
-  heart.style.setProperty('--sway-speed', `${swaySpeed}s`);
-  heart.style.setProperty('--sway-amp', `${swayAmp}px`);
-  
-  heart.innerHTML = `
-    <svg class="heart-svg" viewBox="0 0 24 24" fill="url(#heartGradient)">
-      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-    </svg>
-    <span class="heart-badge">${isSpecial ? '💖 Special Gift' : 'Tap Me ❤️'}</span>
-  `;
-  
-  // Clicking the heart opens the surprise photo!
-  heart.addEventListener('click', (e) => {
-    e.stopPropagation();
-    popElement(heart, e.clientX, e.clientY);
-    playHeartChime();
-    openPhotoModal();
-  });
-  
-  container.appendChild(heart);
-  totalBalloonsReleased++;
-  updateBalloonCounter();
-  
-  setTimeout(() => {
-    if (heart.parentNode) {
-      heart.parentNode.removeChild(heart);
-    }
-  }, speed * 1000);
-}
-
-// Particle pop explosion
-function popElement(elem, x, y) {
-  playClickSound();
-  
-  const colors = ['#f43f5e', '#ec4899', '#f472b6', '#fb7185', '#ffffff', '#fbbf24', '#a855f7'];
-  const particles = 20;
-  
-  for (let i = 0; i < particles; i++) {
-    const p = document.createElement('div');
-    p.className = 'confetti-particle';
-    const size = Math.random() * 9 + 5;
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    const angle = (Math.PI * 2 / particles) * i + (Math.random() * 0.4 - 0.2);
-    const dist = Math.random() * 80 + 45;
-    const tx = Math.cos(angle) * dist;
-    const ty = Math.sin(angle) * dist;
-    
-    p.style.width = `${size}px`;
-    p.style.height = `${size}px`;
-    p.style.backgroundColor = color;
-    p.style.left = `${x || window.innerWidth / 2}px`;
-    p.style.top = `${y || window.innerHeight / 2}px`;
-    p.style.setProperty('--tx', `${tx}px`);
-    p.style.setProperty('--ty', `${ty}px`);
-    p.style.setProperty('--time', `${Math.random() * 0.3 + 0.65}s`);
-    p.style.setProperty('--rot', `${Math.random() * 720 - 360}deg`);
-    
-    document.body.appendChild(p);
-    setTimeout(() => p.remove(), 950);
-  }
-  
-  elem.style.transform = 'scale(0)';
-  elem.style.opacity = '0';
-  elem.style.transition = 'all 0.2s ease-out';
-  setTimeout(() => elem.remove(), 250);
-}
-
-// Flow Engine
-let flowInterval = null;
-
-function startFlow() {
-  playClickSound();
-  
-  // Instant multi-wave burst
-  for (let i = 0; i < 5; i++) {
-    setTimeout(spawnBalloon, i * 140);
-  }
-  for (let i = 0; i < 4; i++) {
-    setTimeout(() => spawnHeart(i === 0), i * 160 + 80);
-  }
-  
-  const clickBtn = document.getElementById('clickMeBtn');
-  const hintText = document.getElementById('hintText');
-  
-  if (clickBtn) {
-    clickBtn.innerHTML = `
-      <span class="text-2xl sm:text-3xl animate-bounce">🎈</span>
-      <span class="tracking-wide">Release More Love!</span>
-      <span class="text-2xl sm:text-3xl animate-bounce">💖</span>
-    `;
-  }
-  
-  if (hintText) {
-    hintText.innerHTML = `
-      ✨ <strong class="text-rose-300 font-extrabold text-sm sm:text-base">Touch ANY rising heart</strong> to open your surprise! ✨
-    `;
-    hintText.className = 'text-sm sm:text-base text-rose-200 font-bold animate-pulse';
-  }
-  
-  if (!flowInterval) {
-    flowInterval = setInterval(() => {
-      if (Math.random() > 0.4) {
-        spawnBalloon();
-      } else {
-        spawnHeart(Math.random() > 0.8);
-      }
-    }, 420);
-  }
-}
-
-// Open Photo Modal
-function openPhotoModal() {
-  const modal = document.getElementById('photoModal');
-  if (!modal) return;
-  
-  modal.classList.remove('hidden');
-  setTimeout(() => {
-    modal.classList.add('active');
-  }, 10);
-  
-  launchModalConfetti();
-}
-
-// Close Photo Modal
-function closePhotoModal() {
-  const modal = document.getElementById('photoModal');
-  if (!modal) return;
-  
-  modal.classList.remove('active');
-  setTimeout(() => {
-    modal.classList.add('hidden');
-  }, 450);
-}
-
-// Modal Confetti Celebration
-function launchModalConfetti() {
-  const colors = ['#f43f5e', '#ec4899', '#f472b6', '#fb7185', '#ffd166', '#06d6a0', '#a855f7', '#ffffff'];
-  const count = 60;
-  
-  for (let i = 0; i < count; i++) {
-    const p = document.createElement('div');
-    p.className = 'confetti-particle';
-    const isCircle = Math.random() > 0.45;
-    const width = Math.random() * 11 + 6;
-    const height = isCircle ? width : (Math.random() * 14 + 6);
-    
-    p.style.width = `${width}px`;
-    p.style.height = `${height}px`;
-    p.style.borderRadius = isCircle ? '50%' : '2px';
-    p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    p.style.left = `${window.innerWidth / 2}px`;
-    p.style.top = `${window.innerHeight / 2}px`;
-    
-    const angle = Math.random() * Math.PI * 2;
-    const dist = Math.random() * (Math.min(window.innerWidth, window.innerHeight) * 0.48) + 70;
-    const tx = Math.cos(angle) * dist;
-    const ty = Math.sin(angle) * dist;
-    
-    p.style.setProperty('--tx', `${tx}px`);
-    p.style.setProperty('--ty', `${ty}px`);
-    p.style.setProperty('--time', `${Math.random() * 0.5 + 0.85}s`);
-    p.style.setProperty('--rot', `${Math.random() * 1080 - 540}deg`);
-    
-    document.body.appendChild(p);
-    setTimeout(() => p.remove(), 1350);
-  }
-}
-
-// Initialize on Load
 document.addEventListener('DOMContentLoaded', () => {
-  createStars();
-  
-  // Set up SVG Heart Gradient Definition
-  const svgDef = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svgDef.setAttribute('style', 'position: absolute; width: 0; height: 0; pointer-events: none;');
-  svgDef.innerHTML = `
-    <defs>
-      <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#ff6b8b"/>
-        <stop offset="45%" stop-color="#f43f5e"/>
-        <stop offset="100%" stop-color="#be123c"/>
-      </linearGradient>
-    </defs>
-  `;
-  document.body.appendChild(svgDef);
-  
-  // Grand Click Me Button
-  const clickBtn = document.getElementById('clickMeBtn');
-  if (clickBtn) {
-    clickBtn.addEventListener('click', startFlow);
+  // Initialize Lucide Icons
+  if (window.lucide) {
+    window.lucide.createIcons();
   }
-  
-  // Center 3D Heart Crystal Trigger
-  const centerHeart = document.getElementById('centerHeartBtn');
-  if (centerHeart) {
-    centerHeart.addEventListener('click', (e) => {
-      popElement(centerHeart, e.clientX, e.clientY);
-      playHeartChime();
-      openPhotoModal();
+
+  // --- Mobile Navigation Toggle ---
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (mobileMenuBtn && mobileMenu) {
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
     });
   }
-  
-  // Close Modal
-  const closeBtn = document.getElementById('closeModalBtn');
-  if (closeBtn) {
-    closeBtn.addEventListener('click', closePhotoModal);
-  }
-  
-  const modal = document.getElementById('photoModal');
-  if (modal) {
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal || e.target.classList.contains('modal-backdrop')) {
-        closePhotoModal();
+
+  // --- FAQ Accordion ---
+  const faqToggles = document.querySelectorAll('.faq-toggle');
+  faqToggles.forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      const content = toggle.nextElementSibling;
+      const icon = toggle.querySelector('.faq-icon');
+      const isOpen = !content.classList.contains('hidden');
+
+      // Close other FAQs
+      document.querySelectorAll('.faq-content').forEach(c => c.classList.add('hidden'));
+      document.querySelectorAll('.faq-icon').forEach(i => i.style.transform = 'rotate(0deg)');
+
+      if (!isOpen) {
+        content.classList.remove('hidden');
+        if (icon) icon.style.transform = 'rotate(180deg)';
       }
     });
-  }
-  
-  // Escape Key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      closePhotoModal();
-    }
   });
-  
-  // Music Toggle
-  const musicBtn = document.getElementById('musicToggleBtn');
-  if (musicBtn) {
-    musicBtn.addEventListener('click', toggleMusic);
-  }
-  
-  // Modal Release More Balloons
-  const modalFlowBtn = document.getElementById('modalFlowBtn');
-  if (modalFlowBtn) {
-    modalFlowBtn.addEventListener('click', () => {
-      closePhotoModal();
-      startFlow();
-      for (let i = 0; i < 8; i++) {
-        setTimeout(spawnBalloon, i * 100);
-      }
-    });
-  }
-  
-  // "I Forgive You!" Celebration Handler
-  const forgiveBtn = document.getElementById('forgiveBtn');
-  const forgiveCelebration = document.getElementById('forgiveCelebration');
-  if (forgiveBtn) {
-    forgiveBtn.addEventListener('click', () => {
-      playCelebrationSound();
-      launchModalConfetti();
-      launchModalConfetti();
-      
-      forgiveBtn.classList.add('hidden');
-      if (forgiveCelebration) {
-        forgiveCelebration.classList.remove('hidden');
-      }
-      
-      // Also release a stream of balloons in background
-      startFlow();
-      for (let i = 0; i < 10; i++) {
-        setTimeout(spawnBalloon, i * 120);
-        setTimeout(() => spawnHeart(true), i * 150 + 50);
-      }
-    });
-  }
+
+  // --- Interactive Kabaddi Scorekeeper Demo ---
+  initScorekeeperDemo();
+
+  // --- Interactive Kabaddi Mat Animation Engine ---
+  initKabaddiMatAnimation();
 });
+
+function initScorekeeperDemo() {
+  // Demo State
+  const state = {
+    teamA: {
+      name: 'Thalaivas Warriors',
+      score: 18,
+      playersOnMat: 6,
+      totalPlayers: 7,
+      raids: 11,
+      tackles: 7,
+      color: '#ff5500'
+    },
+    teamB: {
+      name: 'Paltan Strikers',
+      score: 16,
+      playersOnMat: 4,
+      totalPlayers: 7,
+      raids: 10,
+      tackles: 6,
+      color: '#3b82f6'
+    },
+    currentRaidingTeam: 'teamA', // 'teamA' or 'teamB'
+    emptyRaidStreak: 1, // When 2, next raid is Do-Or-Die!
+    timerSeconds: 30,
+    timerInterval: null,
+    isTimerRunning: false,
+    history: [
+      { text: 'Match in progress: 2nd Half (28:14)', type: 'info' },
+      { text: 'R. Kumar tackled! 1 Tackle Point to Paltan Strikers', type: 'tackle' },
+      { text: 'V. Sundar executes Running Hand Touch! +1 Point to Thalaivas', type: 'raid' }
+    ]
+  };
+
+  // DOM Elements
+  const elTeamAScore = document.getElementById('teamAScore');
+  const elTeamBScore = document.getElementById('teamBScore');
+  const elTeamAMat = document.getElementById('teamAMat');
+  const elTeamBMat = document.getElementById('teamBMat');
+  const elTeamABreakdown = document.getElementById('teamABreakdown');
+  const elTeamBBreakdown = document.getElementById('teamBBreakdown');
+  const elTimer = document.getElementById('raidTimer');
+  const elTimerBar = document.getElementById('raidTimerBar');
+  const elCurrentRaider = document.getElementById('currentRaiderBadge');
+  const elDodBadge = document.getElementById('dodBadge');
+  const elCommentary = document.getElementById('demoCommentary');
+
+  function render() {
+    if (elTeamAScore) elTeamAScore.innerText = state.teamA.score;
+    if (elTeamBScore) elTeamBScore.innerText = state.teamB.score;
+
+    if (elTeamAMat) {
+      elTeamAMat.innerText = `${state.teamA.playersOnMat}/7 on mat`;
+      elTeamAMat.className = `text-xs px-2.5 py-1 rounded-full font-semibold ${
+        state.teamA.playersOnMat <= 3 ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'bg-slate-700/60 text-slate-300'
+      }`;
+    }
+
+    if (elTeamBMat) {
+      elTeamBMat.innerText = `${state.teamB.playersOnMat}/7 on mat`;
+      elTeamBMat.className = `text-xs px-2.5 py-1 rounded-full font-semibold ${
+        state.teamB.playersOnMat <= 3 ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'bg-slate-700/60 text-slate-300'
+      }`;
+    }
+
+    if (elTeamABreakdown) {
+      elTeamABreakdown.innerText = `Raids: ${state.teamA.raids} | Tackles: ${state.teamA.tackles}`;
+    }
+    if (elTeamBBreakdown) {
+      elTeamBBreakdown.innerText = `Raids: ${state.teamB.raids} | Tackles: ${state.teamB.tackles}`;
+    }
+
+    // Active Raider
+    const raiderTeam = state[state.currentRaidingTeam];
+    const defendingTeamKey = state.currentRaidingTeam === 'teamA' ? 'teamB' : 'teamA';
+    const defendingTeam = state[defendingTeamKey];
+
+    if (elCurrentRaider) {
+      elCurrentRaider.innerText = `${raiderTeam.name} Raiding (${defendingTeam.playersOnMat} Defenders)`;
+      elCurrentRaider.className = `inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
+        state.currentRaidingTeam === 'teamA' ? 'bg-brand-500/20 text-brand-400 border border-brand-500/30' : 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
+      }`;
+    }
+
+    // Do or Die indicator
+    if (elDodBadge) {
+      if (state.emptyRaidStreak >= 2) {
+        elDodBadge.classList.remove('hidden');
+      } else {
+        elDodBadge.classList.add('hidden');
+      }
+    }
+
+    // Commentary feed
+    if (elCommentary) {
+      elCommentary.innerHTML = state.history.slice(0, 5).map(item => {
+        let badgeColor = 'bg-slate-700 text-slate-300';
+        let icon = 'activity';
+        if (item.type === 'raid') {
+          badgeColor = 'bg-brand-500/20 text-brand-400 border border-brand-500/30';
+          icon = 'zap';
+        } else if (item.type === 'tackle') {
+          badgeColor = 'bg-blue-500/20 text-blue-400 border border-blue-500/30';
+          icon = 'shield';
+        } else if (item.type === 'allout') {
+          badgeColor = 'bg-red-500/20 text-red-400 border border-red-500/30';
+          icon = 'flame';
+        }
+
+        return `
+          <div class="flex items-start gap-3 text-xs sm:text-sm py-2 border-b border-slate-800/80 last:border-0 animate-fadeIn">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide shrink-0 ${badgeColor}">${item.type}</span>
+            <span class="text-slate-300 font-medium">${item.text}</span>
+          </div>
+        `;
+      }).join('');
+    }
+  }
+
+  function addLog(text, type = 'info') {
+    state.history.unshift({ text, type });
+    render();
+  }
+
+  function resetRaidTimer() {
+    clearInterval(state.timerInterval);
+    state.timerSeconds = 30;
+    if (elTimer) elTimer.innerText = '30s';
+    if (elTimerBar) elTimerBar.style.width = '100%';
+    state.isTimerRunning = false;
+  }
+
+  function startRaidTimer() {
+    resetRaidTimer();
+    state.isTimerRunning = true;
+    state.timerInterval = setInterval(() => {
+      state.timerSeconds--;
+      if (elTimer) elTimer.innerText = `${state.timerSeconds}s`;
+      if (elTimerBar) {
+        const pct = (state.timerSeconds / 30) * 100;
+        elTimerBar.style.width = `${pct}%`;
+        if (pct < 25) {
+          elTimerBar.className = 'raid-progress h-full bg-red-500';
+        } else {
+          elTimerBar.className = 'raid-progress h-full bg-brand-500';
+        }
+      }
+
+      if (state.timerSeconds <= 0) {
+        clearInterval(state.timerInterval);
+        state.isTimerRunning = false;
+        // Time out raid = raider out
+        handleTackle(false, true);
+      }
+    }, 1000);
+  }
+
+  function toggleRaiderTurn() {
+    state.currentRaidingTeam = state.currentRaidingTeam === 'teamA' ? 'teamB' : 'teamA';
+    startRaidTimer();
+    render();
+  }
+
+  // --- Scoring Action Handlers ---
+
+  function handleTouchPoint(points = 1) {
+    const raidingTeam = state[state.currentRaidingTeam];
+    const defendingKey = state.currentRaidingTeam === 'teamA' ? 'teamB' : 'teamA';
+    const defendingTeam = state[defendingKey];
+
+    raidingTeam.score += points;
+    raidingTeam.raids += points;
+
+    // Out defender
+    defendingTeam.playersOnMat = Math.max(0, defendingTeam.playersOnMat - points);
+
+    // Revive raiding player if any are out
+    if (raidingTeam.playersOnMat < raidingTeam.totalPlayers) {
+      raidingTeam.playersOnMat = Math.min(raidingTeam.totalPlayers, raidingTeam.playersOnMat + 1);
+    }
+
+    state.emptyRaidStreak = 0;
+    addLog(`⚡ Touch Point! ${raidingTeam.name} tags ${points} defender(s). +${points} Point!`, 'raid');
+
+    checkAllOut(defendingKey, state.currentRaidingTeam);
+    toggleRaiderTurn();
+  }
+
+  function handleBonusPoint() {
+    const raidingTeam = state[state.currentRaidingTeam];
+    const defendingKey = state.currentRaidingTeam === 'teamA' ? 'teamB' : 'teamA';
+    const defendingTeam = state[defendingKey];
+
+    if (defendingTeam.playersOnMat < 6) {
+      addLog(`⚠️ Bonus line deactivated! Only ${defendingTeam.playersOnMat} defenders on mat (requires 6+)`, 'info');
+      return;
+    }
+
+    raidingTeam.score += 1;
+    raidingTeam.raids += 1;
+    state.emptyRaidStreak = 0;
+    addLog(`🎯 Clean Bonus Point claimed by ${raidingTeam.name}! +1 Point.`, 'raid');
+    toggleRaiderTurn();
+  }
+
+  function handleSuperRaid() {
+    const raidingTeam = state[state.currentRaidingTeam];
+    const defendingKey = state.currentRaidingTeam === 'teamA' ? 'teamB' : 'teamA';
+    const defendingTeam = state[defendingKey];
+
+    const points = 3;
+    raidingTeam.score += points;
+    raidingTeam.raids += points;
+
+    defendingTeam.playersOnMat = Math.max(0, defendingTeam.playersOnMat - points);
+    raidingTeam.playersOnMat = Math.min(raidingTeam.totalPlayers, raidingTeam.playersOnMat + 2);
+
+    state.emptyRaidStreak = 0;
+    addLog(`🔥 SUPER RAID! 3 Defenders eliminated in sensational turn! +3 Points for ${raidingTeam.name}!`, 'raid');
+
+    checkAllOut(defendingKey, state.currentRaidingTeam);
+    toggleRaiderTurn();
+  }
+
+  function handleEmptyRaid() {
+    state.emptyRaidStreak++;
+    const raidingTeam = state[state.currentRaidingTeam];
+
+    if (state.emptyRaidStreak >= 3) {
+      // Failed Do or die raid! Raider is out
+      addLog(`🚨 DO-OR-DIE FAILED! Raider is caught without scoring. 1 Point to opposition!`, 'tackle');
+      state.emptyRaidStreak = 0;
+      handleTackle(false);
+      return;
+    }
+
+    if (state.emptyRaidStreak === 2) {
+      addLog(`⏳ Empty raid by ${raidingTeam.name}. WARNING: Next raid is DO-OR-DIE!`, 'info');
+    } else {
+      addLog(`⏱️ Safe empty raid by ${raidingTeam.name}. Mat resets.`, 'info');
+    }
+
+    toggleRaiderTurn();
+  }
+
+  function handleTackle(isSuperTackle = false, isTimeOut = false) {
+    const raidingTeam = state[state.currentRaidingTeam];
+    const defendingKey = state.currentRaidingTeam === 'teamA' ? 'teamB' : 'teamA';
+    const defendingTeam = state[defendingKey];
+
+    const points = isSuperTackle ? 2 : 1;
+    defendingTeam.score += points;
+    defendingTeam.tackles += points;
+
+    // Raider goes out
+    raidingTeam.playersOnMat = Math.max(0, raidingTeam.playersOnMat - 1);
+
+    // Defender revives a player
+    if (defendingTeam.playersOnMat < defendingTeam.totalPlayers) {
+      defendingTeam.playersOnMat = Math.min(defendingTeam.totalPlayers, defendingTeam.playersOnMat + 1);
+    }
+
+    state.emptyRaidStreak = 0;
+
+    if (isTimeOut) {
+      addLog(`⏰ 30-Second Raid Timer Expired! Raider is declared OUT. +1 Point to ${defendingTeam.name}`, 'tackle');
+    } else if (isSuperTackle) {
+      addLog(`🛡️ SUPER TACKLE! ${defendingTeam.name} executes pin with 3 or less defenders! +2 Points!`, 'tackle');
+    } else {
+      addLog(`💥 Tackle Success! Raider brought down on the midline! +1 Point to ${defendingTeam.name}`, 'tackle');
+    }
+
+    checkAllOut(state.currentRaidingTeam, defendingKey);
+    toggleRaiderTurn();
+  }
+
+  function checkAllOut(teamOutOfPlayersKey, benefitingTeamKey) {
+    const teamOut = state[teamOutOfPlayersKey];
+    const teamBenefiting = state[benefitingTeamKey];
+
+    if (teamOut.playersOnMat <= 0) {
+      // ALL OUT / LONA!
+      teamBenefiting.score += 2; // 2 extra Lona points
+      addLog(`🏆 ALL OUT (LONA)! ${teamOut.name} wiped out! +2 Extra Points to ${teamBenefiting.name}. All 7 revived!`, 'allout');
+      teamOut.playersOnMat = 7;
+      teamBenefiting.playersOnMat = 7;
+    }
+  }
+
+  function resetMatch() {
+    state.teamA.score = 18;
+    state.teamA.playersOnMat = 6;
+    state.teamA.raids = 11;
+    state.teamA.tackles = 7;
+
+    state.teamB.score = 16;
+    state.teamB.playersOnMat = 4;
+    state.teamB.raids = 10;
+    state.teamB.tackles = 6;
+
+    state.currentRaidingTeam = 'teamA';
+    state.emptyRaidStreak = 1;
+    state.history = [
+      { text: 'Match reset to 2nd Half starting state.', type: 'info' }
+    ];
+
+    resetRaidTimer();
+    render();
+  }
+
+  // --- Attach Button Listeners ---
+  const btnTouch = document.getElementById('btnTouch');
+  const btnBonus = document.getElementById('btnBonus');
+  const btnSuperRaid = document.getElementById('btnSuperRaid');
+  const btnEmpty = document.getElementById('btnEmpty');
+  const btnTackle = document.getElementById('btnTackle');
+  const btnSuperTackle = document.getElementById('btnSuperTackle');
+  const btnReset = document.getElementById('btnResetDemo');
+
+  if (btnTouch) btnTouch.addEventListener('click', () => handleTouchPoint(1));
+  if (btnBonus) btnBonus.addEventListener('click', handleBonusPoint);
+  if (btnSuperRaid) btnSuperRaid.addEventListener('click', handleSuperRaid);
+  if (btnEmpty) btnEmpty.addEventListener('click', handleEmptyRaid);
+  if (btnTackle) btnTackle.addEventListener('click', () => handleTackle(false));
+  if (btnSuperTackle) btnSuperTackle.addEventListener('click', () => handleTackle(true));
+  if (btnReset) btnReset.addEventListener('click', resetMatch);
+
+  // Initial render
+  render();
+  startRaidTimer();
+}
+
+/**
+ * Kabaddi Mat Live Animation Engine
+ * Animates real Kabaddi maneuvers: Running Hand Touch, Bonus Point, Chain Tackle, and Super Raid
+ */
+function initKabaddiMatAnimation() {
+  const raider = document.getElementById('animRaider');
+  const actionBanner = document.getElementById('matActionBanner');
+  const matContainer = document.getElementById('matArena');
+
+  if (!raider || !matContainer) return;
+
+  const defenders = {
+    lc: document.getElementById('defLC'), // Left Corner
+    li: document.getElementById('defLI'), // Left In
+    lcov: document.getElementById('defLCov'), // Left Cover
+    c: document.getElementById('defC'), // Center
+    rcov: document.getElementById('defRCov'), // Right Cover
+    ri: document.getElementById('defRI'), // Right In
+    rc: document.getElementById('defRC')  // Right Corner
+  };
+
+  const defaultPositions = {
+    raider: { top: '82%', left: '50%' },
+    lc: { top: '22%', left: '16%' },
+    li: { top: '32%', left: '26%' },
+    lcov: { top: '38%', left: '38%' },
+    c: { top: '42%', left: '50%' },
+    rcov: { top: '38%', left: '62%' },
+    ri: { top: '32%', left: '74%' },
+    rc: { top: '22%', left: '84%' }
+  };
+
+  function resetPositions() {
+    setPos(raider, defaultPositions.raider.top, defaultPositions.raider.left);
+    Object.keys(defenders).forEach(k => {
+      if (defenders[k]) setPos(defenders[k], defaultPositions[k].top, defaultPositions[k].left);
+    });
+  }
+
+  function setPos(el, top, left) {
+    if (el) {
+      el.style.top = top;
+      el.style.left = left;
+    }
+  }
+
+  function setBanner(text, type = 'info') {
+    if (!actionBanner) return;
+    let badgeClass = 'bg-brand-500/20 text-brand-400 border border-brand-500/30';
+    if (type === 'bonus') badgeClass = 'bg-amber-500/20 text-amber-400 border border-amber-500/30';
+    if (type === 'tackle') badgeClass = 'bg-blue-500/20 text-blue-400 border border-blue-500/30';
+    if (type === 'super') badgeClass = 'bg-gradient-to-r from-brand-500 to-red-500 text-white font-black';
+
+    actionBanner.className = `inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold transition-all transform scale-105 ${badgeClass}`;
+    actionBanner.innerHTML = text;
+  }
+
+  function triggerBlast(top, left) {
+    const blast = document.createElement('div');
+    blast.className = 'impact-blast';
+    blast.style.top = top;
+    blast.style.left = left;
+    matContainer.appendChild(blast);
+    setTimeout(() => blast.remove(), 600);
+  }
+
+  // Maneuver 1: Running Hand Touch
+  function animHandTouch() {
+    resetPositions();
+    setBanner('⚡ Raider dashing for Running Hand Touch...', 'info');
+
+    setTimeout(() => {
+      // Raider sprints toward Right Cover
+      setPos(raider, '40%', '60%');
+      setPos(defenders.rcov, '36%', '64%');
+    }, 200);
+
+    setTimeout(() => {
+      // Touch impact!
+      triggerBlast('38%', '61%');
+      setBanner('🎯 TOUCH! Raider tags Right Cover (+1 Point)', 'info');
+      // Raider retreats safely over midline
+      setPos(raider, '82%', '50%');
+    }, 900);
+
+    setTimeout(() => {
+      resetPositions();
+      setBanner('✅ Raider safely back across midline', 'info');
+    }, 1800);
+  }
+
+  // Maneuver 2: Bonus Point Toe-Touch
+  function animBonus() {
+    resetPositions();
+    setBanner('🎯 Raider hunting for Bonus Line crossing...', 'bonus');
+
+    setTimeout(() => {
+      // Raider feints left, steps over bonus line
+      setPos(raider, '58%', '28%');
+    }, 300);
+
+    setTimeout(() => {
+      triggerBlast('57%', '28%');
+      setBanner('✨ CLEAN BONUS POINT! Trailing foot in air (+1 Bonus)', 'bonus');
+    }, 900);
+
+    setTimeout(() => {
+      // Quick return to midline
+      setPos(raider, '82%', '45%');
+    }, 1500);
+
+    setTimeout(() => {
+      resetPositions();
+      setBanner('✅ Bonus Secured!', 'bonus');
+    }, 2200);
+  }
+
+  // Maneuver 3: Chain Tackle / Ankle Hold
+  function animTackle() {
+    resetPositions();
+    setBanner('🛡️ Defensive chain closing in on raider...', 'tackle');
+
+    setTimeout(() => {
+      // Raider ventures deep
+      setPos(raider, '36%', '50%');
+    }, 300);
+
+    setTimeout(() => {
+      // Defenders collapse in a chain tackle
+      setPos(defenders.lc, '36%', '46%');
+      setPos(defenders.lcov, '36%', '48%');
+      setPos(defenders.rcov, '36%', '52%');
+      setPos(defenders.rc, '36%', '54%');
+      triggerBlast('35%', '50%');
+      setBanner('💥 PINNED! Defense executes sensational Chain Tackle (+1 Pt)', 'tackle');
+    }, 900);
+
+    setTimeout(() => {
+      setBanner('🛑 Raider is OUT! Revival awarded to defending team', 'tackle');
+    }, 1800);
+
+    setTimeout(() => {
+      resetPositions();
+    }, 2800);
+  }
+
+  // Maneuver 4: Super Raid (Multiple touches)
+  function animSuperRaid() {
+    resetPositions();
+    setBanner('🔥 Raider charging into defense...', 'super');
+
+    setTimeout(() => {
+      // Tag 1 (Right Corner)
+      setPos(raider, '30%', '76%');
+      triggerBlast('28%', '78%');
+    }, 400);
+
+    setTimeout(() => {
+      // Tag 2 (Center)
+      setPos(raider, '40%', '50%');
+      triggerBlast('39%', '50%');
+    }, 900);
+
+    setTimeout(() => {
+      // Tag 3 (Left In)
+      setPos(raider, '38%', '32%');
+      triggerBlast('36%', '30%');
+      setBanner('🔥 SUPER RAID! 3 Defenders tagged! Dashing to midline...', 'super');
+    }, 1400);
+
+    setTimeout(() => {
+      // Escape to midline
+      setPos(raider, '82%', '50%');
+    }, 1900);
+
+    setTimeout(() => {
+      resetPositions();
+      setBanner('🏆 SENSATIONAL SUPER RAID! +3 Points!', 'super');
+    }, 2600);
+  }
+
+  // Auto-play rotation
+  let autoTimer = null;
+  const maneuvers = [animHandTouch, animBonus, animTackle, animSuperRaid];
+  let curIndex = 0;
+
+  function runNextManeuver() {
+    maneuvers[curIndex]();
+    curIndex = (curIndex + 1) % maneuvers.length;
+  }
+
+  function startAutoPlay() {
+    if (autoTimer) clearInterval(autoTimer);
+    runNextManeuver();
+    autoTimer = setInterval(runNextManeuver, 4000);
+  }
+
+  // Bind Buttons
+  const btnAnimTouch = document.getElementById('btnAnimTouch');
+  const btnAnimBonus = document.getElementById('btnAnimBonus');
+  const btnAnimTackle = document.getElementById('btnAnimTackle');
+  const btnAnimSuper = document.getElementById('btnAnimSuper');
+  const btnAnimAuto = document.getElementById('btnAnimAuto');
+
+  if (btnAnimTouch) btnAnimTouch.addEventListener('click', () => { clearInterval(autoTimer); animHandTouch(); });
+  if (btnAnimBonus) btnAnimBonus.addEventListener('click', () => { clearInterval(autoTimer); animBonus(); });
+  if (btnAnimTackle) btnAnimTackle.addEventListener('click', () => { clearInterval(autoTimer); animTackle(); });
+  if (btnAnimSuper) btnAnimSuper.addEventListener('click', () => { clearInterval(autoTimer); animSuperRaid(); });
+  if (btnAnimAuto) btnAnimAuto.addEventListener('click', () => { startAutoPlay(); });
+
+  // Initial setup
+  resetPositions();
+  startAutoPlay();
+}
+
