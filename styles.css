@@ -16,6 +16,20 @@ body {
   overflow-x: hidden;
 }
 
+/* Fallback & Baseline Resets */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
+input, button, select, textarea {
+  font-family: inherit;
+}
+
 .heading-font {
   font-family: 'Cabinet Grotesk', sans-serif;
 }
