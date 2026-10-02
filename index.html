@@ -20,6 +20,41 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="manifest" href="manifest.json">
 
+  <!-- Google tag (gtag.js) - Firebase Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0LYG8W2HE0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0LYG8W2HE0', {
+      page_title: document.title,
+      page_location: window.location.href,
+      send_page_view: true
+    });
+  </script>
+
+  <!-- Firebase Web SDK Modular Initialization -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA4H-XsdSb1uXnhzDuQruwlwWq84whDCac",
+      authDomain: "kabbahub.firebaseapp.com",
+      databaseURL: "https://kabbahub-default-rtdb.firebaseio.com",
+      projectId: "kabbahub",
+      storageBucket: "kabbahub.firebasestorage.app",
+      messagingSenderId: "630327039004",
+      appId: "1:630327039004:web:28219ef1cc280837e37bd9",
+      measurementId: "G-0LYG8W2HE0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    window.kabbaFirebase = { app, analytics, logEvent };
+  </script>
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -171,7 +206,7 @@
             </div>
 
             <!-- Pre-register / Notify Form -->
-            <form id="notify" onsubmit="event.preventDefault(); document.getElementById('notifySuccess').classList.remove('hidden');" class="flex flex-col sm:flex-row gap-2 pt-1">
+            <form id="notify" onsubmit="event.preventDefault(); document.getElementById('notifySuccess').classList.remove('hidden'); if(window.gtag){ gtag('event', 'sign_up', { method: 'waitlist_form' }); } if(window.kabbaFirebase && window.kabbaFirebase.logEvent){ window.kabbaFirebase.logEvent(window.kabbaFirebase.analytics, 'waitlist_signup'); }" class="flex flex-col sm:flex-row gap-2 pt-1">
               <input type="email" required placeholder="Enter your email or phone number" class="bg-surface-900 border border-slate-700 px-4 py-2.5 rounded-xl text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-500 flex-1">
               <button type="submit" class="px-5 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white font-bold text-xs uppercase tracking-wider transition shadow-lg shadow-brand-500/25 shrink-0 flex items-center justify-center gap-1.5">
                 <span>Notify Me</span>

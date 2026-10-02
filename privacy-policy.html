@@ -7,6 +7,41 @@
   <meta name="description" content="Privacy Policy for Kabba Hub, the premier live scoring, tournament management, and player statistics application for Kabaddi.">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- Google tag (gtag.js) - Firebase Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0LYG8W2HE0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0LYG8W2HE0', {
+      page_title: document.title,
+      page_location: window.location.href,
+      send_page_view: true
+    });
+  </script>
+
+  <!-- Firebase Web SDK Modular Initialization -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA4H-XsdSb1uXnhzDuQruwlwWq84whDCac",
+      authDomain: "kabbahub.firebaseapp.com",
+      databaseURL: "https://kabbahub-default-rtdb.firebaseio.com",
+      projectId: "kabbahub",
+      storageBucket: "kabbahub.firebasestorage.app",
+      messagingSenderId: "630327039004",
+      appId: "1:630327039004:web:28219ef1cc280837e37bd9",
+      measurementId: "G-0LYG8W2HE0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
