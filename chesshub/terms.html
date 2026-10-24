@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Use - ChessHub | Fair Play &amp; Community Standards</title>
+  <meta name="description" content="Official Terms of Use and Fair Play Agreement for ChessHub (com.example.chesshub & com.rakr.chesshub). Anti-cheat rules, FIDE clock regulations, mutual draw protocol, and intellectual property.">
+
+  <!-- Mobile Theme & PWA -->
+  <meta name="theme-color" content="#0F172A">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+  <!-- Local Engine Scripts -->
+  <script src="tailwind.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: {
+              300: '#F3E5AB',
+              400: '#E5C158',
+              500: '#D4AF37',
+              600: '#AA820A',
+            },
+            slate: {
+              850: '#141E33',
+              900: '#0F172A',
+              950: '#0A0E1A',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script src="lucide.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="chess-radial-bg min-h-screen text-slate-200 antialiased selection:bg-amber-500 selection:text-slate-950">
+
+  <!-- Navigation Bar -->
+  <nav class="sticky top-0 z-50 bg-slate-950/90 backdrop-blur-md border-b border-amber-500/20">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl border border-amber-500/40">
+          ♟️
+        </div>
+        <div>
+          <span class="text-xl font-black text-white luxury-heading">CHESS<span class="gold-gradient-text">HUB</span></span>
+          <span class="block text-[10px] tracking-widest uppercase font-semibold text-amber-400/80">Terms of Use &amp; Fair Play</span>
+        </div>
+      </a>
+
+      <div class="flex items-center gap-4 text-xs font-semibold text-slate-300">
+        <a href="index.html" class="hover:text-amber-400 transition">Back to App</a>
+        <a href="privacy.html" class="hover:text-amber-400 transition">Privacy Policy</a>
+        <a href="rules.html" class="hover:text-amber-400 transition">Rules Guide</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Legal Document Container -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+    
+    <div class="luxury-glass p-6 sm:p-12 rounded-3xl border border-amber-500/25 space-y-10 shadow-2xl">
+      
+      <!-- Document Header -->
+      <div class="border-b border-slate-800 pb-8 space-y-3">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold uppercase tracking-wider">
+          <i data-lucide="scale" class="w-4 h-4"></i>
+          <span>Official End-User License Agreement &amp; Community Code</span>
+        </div>
+        <h1 class="luxury-heading text-3xl sm:text-5xl font-black text-white">
+          Terms of Use &amp; Service
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-400">
+          Last Updated: <strong>October 2026</strong> &bull; Applies to <strong>com.example.chesshub</strong> (Android) &amp; <strong>com.rakr.chesshub</strong> (iOS)
+        </p>
+      </div>
+
+      <!-- Preamble & Acceptance -->
+      <section class="space-y-3 text-sm leading-relaxed text-slate-300 font-light">
+        <p>
+          These Terms of Use ("Terms", "Agreement") constitute a legally binding agreement between you ("User", "Player", or "You") and the developers and operators of <strong class="text-white font-semibold">ChessHub</strong> ("we", "us", or "our").
+        </p>
+        <p>
+          By downloading, installing, launching, accessing in Guest Mode, or creating an authenticated account on ChessHub across Apple iOS or Google Android, you acknowledge that you have read, understood, and agreed to be bound by these Terms and our companion <a href="privacy.html" class="text-amber-400 underline font-semibold">Privacy Policy</a>.
+        </p>
+      </section>
+
+      <!-- Section 1: Account Eligibility & Dual Authentication -->
+      <section class="space-y-4 pt-4 border-t border-slate-800">
+        <h2 class="luxury-heading text-xl sm:text-2xl font-bold text-amber-300 flex items-center gap-2.5">
+          <span>1.</span> Account Eligibility &amp; Access Modes
+        </h2>
+        
+        <div class="space-y-3 text-sm leading-relaxed text-slate-300 font-light">
+          <p>
+            <strong class="text-white">1.1 Guest Mode:</strong> Players may participate in live matchmaking and casual play as a Guest. Guest accounts are identified by ephemeral pseudonyms (e.g., <code class="text-amber-300 bg-slate-950 px-1 py-0.5 rounded">guest_a1b2c3d4</code>). Guest players agree to all game integrity, anti-cheat, and sportsmanship rules herein.
+          </p>
+          <p>
+            <strong class="text-white">1.2 Authenticated Grandmaster Accounts:</strong> Users seeking verified rank retention across mobile devices authenticate via phone number One-Time Password (OTP) powered by Firebase Auth. You are solely responsible for maintaining custody of your phone number and SMS verification codes.
+          </p>
+          <p>
+            <strong class="text-white">1.3 Single Account Principle:</strong> Creating secondary accounts for the purpose of rating manipulation (sandbagging or rating inflation) is strictly prohibited under Section 2.1.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 2: Game Integrity, Anti-Cheat & Fair Play Standards -->
+      <section class="space-y-4 pt-4 border-t border-slate-800">
+        <h2 class="luxury-heading text-xl sm:text-2xl font-bold text-amber-300 flex items-center gap-2.5">
+          <span>2.</span> Game Integrity, Anti-Cheat &amp; Fair Play
+        </h2>
+        
+        <p class="text-sm leading-relaxed text-slate-300 font-light">
+          ChessHub is built on absolute competitive fairness. We enforce zero-tolerance anti-cheat policies to protect the authenticity of the live Firestore leaderboard:
+        </p>
+
+        <div class="space-y-3">
+          <div class="bg-slate-900/80 p-4 sm:p-5 rounded-2xl border border-rose-500/30 space-y-2">
+            <h3 class="font-bold text-rose-400 text-base flex items-center gap-2">
+              <i data-lucide="ban" class="w-4 h-4"></i>
+              <span>2.1 Prohibition of External Chess Engines &amp; Bots</span>
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
+              Players are strictly prohibited from utilizing external chess engines (including, but not limited to, <strong>Stockfish, Komodo, Leela Chess Zero, Houdini</strong>), automated bots, opening book solvers, endgame tablebases, or consulting third-party human players or computer programs during any rated online match. All moves must originate purely from the player's own cognitive intellect.
+            </p>
+          </div>
+
+          <div class="bg-slate-900/80 p-4 sm:p-5 rounded-2xl border border-slate-800 space-y-2">
+            <h3 class="font-bold text-amber-400 text-base flex items-center gap-2">
+              <i data-lucide="clock" class="w-4 h-4"></i>
+              <span>2.2 Disconnection &amp; Inactivity Rules (FIDE Clock Standards)</span>
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
+              In online matchmaking, players are responsible for maintaining a stable network connection. If a player intentionally closes the app, experiences a network drop, or permits their turn countdown timer to expire, standard <strong>FIDE Clock Expiration Rules</strong> apply: the player loses the match on time. If the opposing player has insufficient mating material to deliver checkmate by any series of legal moves, the game is declared a draw under FIDE Article 6.9.
+            </p>
+          </div>
+
+          <div class="bg-slate-900/80 p-4 sm:p-5 rounded-2xl border border-slate-800 space-y-2">
+            <h3 class="font-bold text-amber-400 text-base flex items-center gap-2">
+              <i data-lucide="trending-down" class="w-4 h-4"></i>
+              <span>2.3 Rating Manipulation, Sandbagging &amp; Collusion</span>
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
+              Any attempt to distort ELO rating calculations (calculated dynamically with <code class="text-amber-300 bg-slate-950 px-1 py-0.5 rounded">K=32</code>) is a direct breach of this Agreement. This includes intentionally aborting or resigning games to lower one's rating ("sandbagging"), colluding in private game rooms with friends or secondary accounts to artificially boost points, or manipulating matchmaking queue states. Violations result in immediate rating resets, leaderboard expulsion, and permanent device-level bans.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Protocol for Resignation & Draw Offers -->
+      <section class="space-y-4 pt-4 border-t border-slate-800">
+        <h2 class="luxury-heading text-xl sm:text-2xl font-bold text-amber-300 flex items-center gap-2.5">
+          <span>3.</span> Protocol for Resignation &amp; Draw Offers
+        </h2>
+        
+        <p class="text-sm leading-relaxed text-slate-300 font-light">
+          Matches on ChessHub follow precise client-server communication protocols to prevent griefing and unauthorized game cancellations:
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+          <div class="bg-slate-900/80 p-4 sm:p-5 rounded-2xl border border-slate-800 space-y-2">
+            <h4 class="font-bold text-white flex items-center gap-2">
+              <i data-lucide="handshake" class="w-4 h-4 text-emerald-400"></i>
+              <span>Mutual Draw Agreement Protocol</span>
+            </h4>
+            <p class="text-xs text-slate-300 font-light leading-relaxed">
+              A player may propose a draw through the in-game action menu. When triggered, the system presents a <code class="text-amber-300 bg-slate-950 px-1 py-0.5 rounded">Waiting for opponent</code> dialog to the initiator and delivers an interactive prompt to the receiving player (<code class="text-amber-300 bg-slate-950 px-1 py-0.5 rounded">Opponent has offered a draw. Accept offer?</code>). A draw is executed if and only if the opponent accepts. If declined or ignored, the match continues uninterrupted without rating penalty.
+            </p>
+          </div>
+
+          <div class="bg-slate-900/80 p-4 sm:p-5 rounded-2xl border border-slate-800 space-y-2">
+            <h4 class="font-bold text-white flex items-center gap-2">
+              <i data-lucide="flag" class="w-4 h-4 text-amber-400"></i>
+              <span>Voluntary Resignation Protocol</span>
+            </h4>
+            <p class="text-xs text-slate-300 font-light leading-relaxed">
+              Players may voluntarily resign at any point during their turn or the opponent's turn. Resignation is <strong>final, irrevocable, and immediately terminates the match</strong>. The game room triggers an immediate game-over state, awarding the victory to the opponent and committing the updated ELO scores to Firestore. Resignations cannot be recalled or disputed.
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-slate-900/80 p-4 sm:p-5 rounded-2xl border border-slate-800 space-y-2 text-xs sm:text-sm text-slate-300 font-light">
+          <h4 class="font-bold text-white flex items-center gap-2">
+            <i data-lucide="smartphone" class="w-4 h-4 text-sky-400"></i>
+            <span>Pass &amp; Play (Single Phone Dual Clock) Shared Responsibility</span>
+          </h4>
+          <p class="leading-relaxed">
+            When utilizing the Over-The-Board Dual Clock feature on a single shared physical device, both players share mutual responsibility for physical clock tap toggling, turn progression, and fair play. ChessHub is not liable for device drops, screen damages, or disputes arising from over-the-board physical play.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 4: Intellectual Property & Asset Rights -->
+      <section class="space-y-4 pt-4 border-t border-slate-800">
+        <h2 class="luxury-heading text-xl sm:text-2xl font-bold text-amber-300 flex items-center gap-2.5">
+          <span>4.</span> Intellectual Property &amp; Asset Rights
+        </h2>
+        
+        <div class="space-y-3 text-sm leading-relaxed text-slate-300 font-light">
+          <p>
+            <strong class="text-white">4.1 3D Character Personas &amp; 3D Trophy Models:</strong> All graphical assets, 3D character persona models and illustrations (&mdash; <em>Tactical Queen, Blitz Sovereign, Classical Maestro, Cyber Neo, Prodigy Ace, Speed Falcon, and the Grandmaster</em> &mdash;), 3D trophy models, audio acoustic sound effects, brand logos, and UI layouts are the exclusive proprietary intellectual property of ChessHub and its creators. You may not reverse-engineer, decompile, extract, reproduce, distribute, or create derivative works from these assets without express written consent.
+          </p>
+          <p>
+            <strong class="text-white">4.2 User Content &amp; Match Records License:</strong> Players retain ownership of their chosen display name, username, and local profile image. By playing matches on ChessHub, you grant ChessHub a perpetual, irrevocable, worldwide, royalty-free license to record, store, display, and publish match transcripts (SAN moves, FEN notation), ELO ratings, and leaderboard rankings across our public web and mobile platforms.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 5: Disclaimer of Warranties & Limitation of Liability -->
+      <section class="space-y-4 pt-4 border-t border-slate-800">
+        <h2 class="luxury-heading text-xl sm:text-2xl font-bold text-amber-300 flex items-center gap-2.5">
+          <span>5.</span> Warranties &amp; Limitation of Liability
+        </h2>
+        
+        <p class="text-xs sm:text-sm leading-relaxed text-slate-300 font-light">
+          ChessHub is provided on an <strong>"AS IS"</strong> and <strong>"AS AVAILABLE"</strong> basis without warranties of any kind, either express or implied. While we strive for 99.9% uptime and low-latency Cloud Firestore synchronization, we do not warrant that matchmaking queues will be uninterrupted, error-free, or immune from local network latency. Under no circumstances shall ChessHub or its operators be liable for indirect, incidental, punitive, or consequential damages resulting from app downtime or gameplay disputes.
+        </p>
+      </section>
+
+      <!-- Section 6: In-App Access & Amendments -->
+      <section class="space-y-4 pt-4 border-t border-slate-800">
+        <h2 class="luxury-heading text-xl sm:text-2xl font-bold text-amber-300 flex items-center gap-2.5">
+          <span>6.</span> In-App Access &amp; Modifications to Terms
+        </h2>
+        
+        <p class="text-xs sm:text-sm leading-relaxed text-slate-300 font-light">
+          These Terms are permanently accessible in-app via the Side Menu Drawer &rarr; <strong>Settings &amp; Legal &rarr; Terms of Service</strong> modal dialog, as well as on this public web portal. We reserve the right to amend these Terms at any time. Continued use of ChessHub following any posted revisions constitutes your acceptance of the updated Terms.
+        </p>
+      </section>
+
+      <!-- Contact Section -->
+      <section class="space-y-3 pt-6 border-t border-slate-800 text-sm text-slate-300 font-light">
+        <h2 class="luxury-heading text-xl font-bold text-white">Legal &amp; Support Inquiries</h2>
+        <p>
+          For legal inquiries, copyright notices, or questions regarding fair play enforcement, contact:
+        </p>
+        <p class="font-mono text-amber-300">
+          Email: <a href="mailto:support@kabbahub.com" class="underline">support@kabbahub.com</a> <br>
+          Subject: ChessHub Terms of Service &amp; Fair Play Inquiry
+        </p>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800/80 py-8 text-center text-xs text-slate-500">
+    <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <span>&copy; 2026 ChessHub. All rights reserved.</span>
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="hover:text-amber-400 transition">App Home</a>
+        <a href="privacy.html" class="hover:text-amber-400 transition">Privacy Policy</a>
+        <a href="rules.html" class="hover:text-amber-400 transition">Rules Guide</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    if (window.lucide) window.lucide.createIcons();
+  </script>
+</body>
+</html>

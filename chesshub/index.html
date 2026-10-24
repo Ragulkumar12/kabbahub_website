@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChessHub - The Grandmaster's Arena | Live Global Matchmaking &amp; Pure Competitive Chess</title>
+  <meta name="description" content="Play instantly as a guest or create your Grandmaster account. Real-time multiplayer across Rapid, Blitz, Bullet, dual-clock pass-and-play, 7 3D character personas, and a 100% database-verified live leaderboard.">
+
+  <!-- Mobile Theme & PWA -->
+  <meta name="theme-color" content="#0F172A">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+  <!-- Local Engine Scripts -->
+  <script src="tailwind.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: {
+              300: '#F3E5AB',
+              400: '#E5C158',
+              500: '#D4AF37',
+              600: '#AA820A',
+              700: '#806000',
+            },
+            slate: {
+              850: '#141E33',
+              900: '#0F172A',
+              950: '#0A0E1A',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script src="lucide.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="chess-radial-bg min-h-screen text-slate-100 antialiased selection:bg-amber-500 selection:text-slate-950">
+
+  <!-- Top Cross-Network Studio Announcement -->
+  <div class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-b border-amber-500/25 text-xs py-2 px-4 text-center flex items-center justify-center gap-2">
+    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 font-bold uppercase tracking-wider text-[10px] border border-amber-500/30">
+      <span>👑</span> The Grandmaster's Arena
+    </span>
+    <span class="text-slate-300 hidden sm:inline">Official ChessHub Mobile Ecosystem for Apple iOS &amp; Google Android</span>
+    <span class="text-slate-500 hidden md:inline">&bull;</span>
+    <a href="../index.html" class="text-amber-400 hover:text-amber-300 underline font-semibold flex items-center gap-1">
+      <span>Explore Kabba Hub (Kabaddi Platform)</span>
+      <i data-lucide="arrow-right" class="w-3 h-3"></i>
+    </a>
+  </div>
+
+  <!-- Main Navigation Bar -->
+  <nav class="sticky top-0 z-50 bg-slate-950/90 backdrop-blur-md border-b border-amber-500/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Brand Logo -->
+        <a href="index.html" class="flex items-center gap-3.5 group">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-amber-600 via-yellow-500 to-amber-300 p-[1px] shadow-lg shadow-amber-500/25 group-hover:scale-105 transition">
+            <div class="w-full h-full rounded-xl bg-slate-950 flex items-center justify-center text-2xl">
+              ♟️
+            </div>
+          </div>
+          <div>
+            <span class="text-2xl font-black tracking-tight text-white luxury-heading">
+              CHESS<span class="gold-gradient-text">HUB</span>
+            </span>
+            <span class="block text-[10px] tracking-widest uppercase font-semibold text-amber-400/80">
+              The Grandmaster's Arena
+            </span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <div class="hidden lg:flex items-center gap-8">
+          <a href="#multiplayer" class="text-sm font-semibold text-slate-300 hover:text-amber-300 transition flex items-center gap-1.5">
+            <i data-lucide="globe" class="w-4 h-4 text-amber-400"></i>
+            <span>Live Multiplayer</span>
+          </a>
+          <a href="#leaderboard" class="text-sm font-semibold text-slate-300 hover:text-amber-300 transition flex items-center gap-1.5">
+            <i data-lucide="award" class="w-4 h-4 text-amber-400"></i>
+            <span>Verified Leaderboard</span>
+          </a>
+          <a href="#personas" class="text-sm font-semibold text-slate-300 hover:text-amber-300 transition flex items-center gap-1.5">
+            <i data-lucide="sparkles" class="w-4 h-4 text-amber-400"></i>
+            <span>3D Personas</span>
+          </a>
+          <a href="#clock" class="text-sm font-semibold text-slate-300 hover:text-amber-300 transition flex items-center gap-1.5">
+            <i data-lucide="clock" class="w-4 h-4 text-amber-400"></i>
+            <span>Pass &amp; Play Clock</span>
+          </a>
+          <a href="rules.html" class="text-sm font-semibold text-slate-300 hover:text-amber-300 transition flex items-center gap-1.5">
+            <i data-lucide="book-open" class="w-4 h-4 text-amber-400"></i>
+            <span>Rules Guide</span>
+          </a>
+          <a href="privacy.html" class="text-sm font-semibold text-slate-400 hover:text-white transition">Privacy</a>
+          <a href="terms.html" class="text-sm font-semibold text-slate-400 hover:text-white transition">Terms</a>
+        </div>
+
+        <!-- Download Action -->
+        <div class="hidden sm:flex items-center gap-3">
+          <a href="#downloads" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-black text-xs uppercase tracking-wider transition shadow-lg shadow-amber-500/25 flex items-center gap-2 active:scale-95">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>Get App</span>
+          </a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <div class="lg:hidden flex items-center">
+          <button id="chessMobileBtn" class="p-2 text-slate-400 hover:text-white focus:outline-none">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="chessMobileMenu" class="hidden lg:hidden px-4 pt-2 pb-6 space-y-2 bg-slate-950 border-b border-slate-800">
+      <a href="#multiplayer" class="block py-2 text-sm font-semibold text-slate-300 hover:text-amber-400">Live Multiplayer</a>
+      <a href="#leaderboard" class="block py-2 text-sm font-semibold text-slate-300 hover:text-amber-400">Verified Leaderboard</a>
+      <a href="#personas" class="block py-2 text-sm font-semibold text-slate-300 hover:text-amber-400">3D Personas</a>
+      <a href="#clock" class="block py-2 text-sm font-semibold text-slate-300 hover:text-amber-400">Pass &amp; Play Dual Clock</a>
+      <a href="rules.html" class="block py-2 text-sm font-semibold text-amber-400 font-bold">Chess Rules Guide</a>
+      <a href="privacy.html" class="block py-2 text-sm text-slate-400">Privacy Policy</a>
+      <a href="terms.html" class="block py-2 text-sm text-slate-400">Terms of Service</a>
+      <div class="pt-2">
+        <a href="#downloads" class="w-full py-2.5 rounded-xl bg-amber-500 text-slate-950 font-black text-xs uppercase tracking-wider text-center block">
+          Download Android &amp; iOS
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative pt-12 pb-20 sm:pt-20 sm:pb-28 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left Hero Content -->
+        <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
+          
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-400/30 text-amber-300 text-xs sm:text-sm font-bold uppercase tracking-widest badge-gold-shimmer">
+            <span>⚔️</span>
+            <span>The Grandmaster's Arena</span>
+            <span>⚔️</span>
+          </div>
+
+          <h1 class="luxury-heading text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-tight">
+            Luxury Design. <br>
+            <span class="gold-gradient-text">Live Global Matchmaking.</span> <br>
+            Pure Competitive Chess.
+          </h1>
+
+          <p class="text-base sm:text-xl text-slate-300 max-w-2xl font-light leading-relaxed">
+            Play instantly as a guest or create your Grandmaster account. Experience real-time multiplayer across <strong>Rapid, Blitz, and Bullet</strong>, dual-clock pass-and-play, and a <strong>100% database-verified live leaderboard</strong> powered by Google Cloud Firestore.
+          </p>
+
+          <!-- Key Differentiator Badges -->
+          <div class="grid grid-cols-2 sm:grid-cols-2 gap-3 max-w-lg mx-auto lg:mx-0 text-left">
+            <div class="bg-slate-900/90 border border-amber-500/20 p-3 rounded-xl flex items-center gap-2.5">
+              <i data-lucide="shield-check" class="w-5 h-5 text-amber-400 shrink-0"></i>
+              <span class="text-xs text-slate-200 font-semibold">Zero Fake Bots &bull; 100% Real Players</span>
+            </div>
+            <div class="bg-slate-900/90 border border-amber-500/20 p-3 rounded-xl flex items-center gap-2.5">
+              <i data-lucide="user-check" class="w-5 h-5 text-amber-400 shrink-0"></i>
+              <span class="text-xs text-slate-200 font-semibold">Instant Guest Mode (Zero Friction)</span>
+            </div>
+            <div class="bg-slate-900/90 border border-amber-500/20 p-3 rounded-xl flex items-center gap-2.5">
+              <i data-lucide="users" class="w-5 h-5 text-amber-400 shrink-0"></i>
+              <span class="text-xs text-slate-200 font-semibold">Private Room Codes for Friends</span>
+            </div>
+            <div class="bg-slate-900/90 border border-amber-500/20 p-3 rounded-xl flex items-center gap-2.5">
+              <i data-lucide="sliders" class="w-5 h-5 text-amber-400 shrink-0"></i>
+              <span class="text-xs text-slate-200 font-semibold">Pass &amp; Play Dual Phone Clock</span>
+            </div>
+          </div>
+
+          <!-- Direct Download Action CTAs -->
+          <div id="downloads" class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+            
+            <!-- Android APK Download Card -->
+            <a href="#downloads" class="luxury-glass p-4 rounded-2xl border border-amber-500/30 hover:border-amber-400 transition w-full sm:w-auto flex items-center gap-4 group">
+              <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                <i data-lucide="smartphone" class="w-7 h-7"></i>
+              </div>
+              <div class="text-left">
+                <span class="text-[10px] uppercase font-bold tracking-widest text-slate-400 block">Download Android APK</span>
+                <span class="text-base font-black text-white block">ChessHub.apk</span>
+                <span class="text-[11px] text-amber-400/90 font-medium">Release ~58MB &bull; Package: com.example.chesshub</span>
+              </div>
+            </a>
+
+            <!-- iOS App Store / TestFlight Card -->
+            <a href="#downloads" class="luxury-glass p-4 rounded-2xl border border-amber-500/30 hover:border-amber-400 transition w-full sm:w-auto flex items-center gap-4 group">
+              <div class="w-12 h-12 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                <i data-lucide="apple" class="w-7 h-7"></i>
+              </div>
+              <div class="text-left">
+                <span class="text-[10px] uppercase font-bold tracking-widest text-slate-400 block">Apple iOS (SwiftUI)</span>
+                <span class="text-base font-black text-white block">App Store / TestFlight</span>
+                <span class="text-[11px] text-amber-400/90 font-medium">iOS 17.0+ &bull; Bundle: com.rakr.chesshub</span>
+              </div>
+            </a>
+
+          </div>
+
+        </div>
+
+        <!-- Right Hero: Interactive Chessboard Demonstration -->
+        <div class="lg:col-span-5 flex flex-col items-center">
+          <div class="luxury-glass p-5 rounded-3xl border border-amber-500/30 relative gold-glow w-full max-w-md text-center">
+            
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800 text-xs">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                <span class="text-emerald-400 font-bold uppercase tracking-wider text-[11px]">Live FIDE Engine Demo</span>
+              </div>
+              <button id="resetBoardDemoBtn" class="text-amber-400 hover:text-amber-300 font-semibold flex items-center gap-1 text-[11px]">
+                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                <span>Reset Pieces</span>
+              </button>
+            </div>
+
+            <!-- The Playable Board -->
+            <div class="py-4 flex justify-center">
+              <div id="interactiveChessboard" class="interactive-board"></div>
+            </div>
+
+            <!-- Board Status -->
+            <div class="pt-2 text-left space-y-1">
+              <p id="activeBoardFen" class="text-[11px] font-mono text-slate-400 truncate">
+                Active FEN: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+              </p>
+              <p class="text-xs text-amber-300/80 font-medium">
+                👉 Click any piece to view legal movement highlights and test acoustic wood capture sounds!
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Block 1: Real-Time Multiplayer Engine -->
+  <section id="multiplayer" class="py-20 bg-slate-900/60 border-t border-slate-800 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto space-y-4">
+        <span class="text-xs font-black uppercase tracking-widest text-amber-400">Block 1 &bull; Instant Matchmaking</span>
+        <h2 class="luxury-heading text-3xl sm:text-5xl font-extrabold text-white">
+          Real-Time Multiplayer with Cloud Move Replication
+        </h2>
+        <p class="text-sm sm:text-base text-slate-300 leading-relaxed font-light">
+          Built on Google Cloud Firestore, ChessHub delivers low-latency matchmaking across three official time formats with live board state replication, FEN generation, and FIDE-compliant clock expiration.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12">
+        
+        <!-- Bullet -->
+        <div class="luxury-card-hover luxury-glass p-8 rounded-3xl border border-amber-500/20 text-left space-y-4">
+          <div class="w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-2xl font-black">
+            ⚡
+          </div>
+          <div>
+            <h3 class="luxury-heading text-2xl font-bold text-white">Bullet (1 min)</h3>
+            <span class="text-xs text-amber-400 uppercase tracking-widest font-bold">Pure Adrenaline</span>
+          </div>
+          <p class="text-sm text-slate-300 leading-relaxed font-light">
+            60-second sudden death clock. Test your instinctive calculation, fast pre-moves, and tactical speed flags in the most intense chess arena.
+          </p>
+          <div class="pt-2 border-t border-slate-800/80 text-xs text-slate-400 flex items-center gap-1.5">
+            <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
+            <span>Instant Room Matchmaking</span>
+          </div>
+        </div>
+
+        <!-- Blitz -->
+        <div class="luxury-card-hover luxury-glass p-8 rounded-3xl border border-amber-500/40 text-left space-y-4 relative gold-glow">
+          <span class="absolute top-4 right-4 bg-amber-500 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+            Most Popular
+          </span>
+          <div class="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl font-black">
+            🔥
+          </div>
+          <div>
+            <h3 class="luxury-heading text-2xl font-bold text-white">Blitz (3m &bull; 5m)</h3>
+            <span class="text-xs text-amber-400 uppercase tracking-widest font-bold">Competitive Standard</span>
+          </div>
+          <p class="text-sm text-slate-300 leading-relaxed font-light">
+            The gold standard of competitive online chess. Fast tactical maneuvering with enough room for profound strategic planning and sacrifices.
+          </p>
+          <div class="pt-2 border-t border-slate-800/80 text-xs text-slate-400 flex items-center gap-1.5">
+            <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
+            <span>Mutual Draw &amp; Resign Dialogs</span>
+          </div>
+        </div>
+
+        <!-- Rapid -->
+        <div class="luxury-card-hover luxury-glass p-8 rounded-3xl border border-amber-500/20 text-left space-y-4">
+          <div class="w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-2xl font-black">
+            🕰️
+          </div>
+          <div>
+            <h3 class="luxury-heading text-2xl font-bold text-white">Rapid (10 min)</h3>
+            <span class="text-xs text-amber-400 uppercase tracking-widest font-bold">Deep Strategy</span>
+          </div>
+          <p class="text-sm text-slate-300 leading-relaxed font-light">
+            Deep positional calculation, complex middle-game imbalances, and refined endgame execution. Full FIDE move compliance and cloud archive.
+          </p>
+          <div class="pt-2 border-t border-slate-800/80 text-xs text-slate-400 flex items-center gap-1.5">
+            <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
+            <span>SAN Notation Ledger Stored</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Block 4: Over-The-Board Dual Clock Simulator (Pass & Play) -->
+  <section id="clock" class="py-20 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left: Explanatory Copy -->
+        <div class="lg:col-span-5 space-y-6 text-center lg:text-left">
+          <span class="text-xs font-black uppercase tracking-widest text-amber-400">Block 4 &bull; Physical Over-The-Board Play</span>
+          <h2 class="luxury-heading text-3xl sm:text-5xl font-extrabold text-white">
+            Over-The-Board Dual Clock (Pass &amp; Play)
+          </h2>
+          <p class="text-sm sm:text-base text-slate-300 leading-relaxed font-light">
+            Turn any iPhone, iPad, or Android phone into a professional competition chess clock. Play over your physical wooden board with custom time controls, move count tracking, and independent device sound muting.
+          </p>
+
+          <div class="space-y-3 pt-2 text-left">
+            <div class="flex items-start gap-3">
+              <i data-lucide="volume-2" class="w-5 h-5 text-amber-400 shrink-0 mt-0.5"></i>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                <strong>Isolated Audio Control:</strong> Local acoustic piece clicks. Muting sound on your device has zero effect on your opponent's device.
+              </p>
+            </div>
+            <div class="flex items-start gap-3">
+              <i data-lucide="shield-alert" class="w-5 h-5 text-amber-400 shrink-0 mt-0.5"></i>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                <strong>FIDE Clock Expiration:</strong> When a player's countdown reaches 00:00, the clock sounds a termination chime, registering a loss on time.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Interactive Dual Clock Widget -->
+        <div class="lg:col-span-7 flex justify-center">
+          <div class="luxury-glass p-6 sm:p-8 rounded-3xl border border-amber-500/30 w-full max-w-xl text-center space-y-6 gold-glow">
+            
+            <!-- Clock Controls & Time Presets -->
+            <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-800">
+              <div class="flex items-center gap-1.5 bg-slate-900 p-1 rounded-xl border border-slate-800 text-xs">
+                <button data-min="1" class="time-preset-btn px-3 py-1 rounded-lg text-slate-300 hover:text-white transition">1 min</button>
+                <button data-min="3" class="time-preset-btn px-3 py-1 rounded-lg text-slate-300 hover:text-white transition">3 min</button>
+                <button data-min="5" class="time-preset-btn px-3 py-1 rounded-lg bg-amber-500 text-slate-950 font-black transition">5 min</button>
+                <button data-min="10" class="time-preset-btn px-3 py-1 rounded-lg text-slate-300 hover:text-white transition">10 min</button>
+              </div>
+
+              <!-- Mute Toggle -->
+              <button id="clockMuteBtn" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 hover:text-white flex items-center gap-1.5 transition">
+                <i data-lucide="volume-2" class="w-4 h-4 text-emerald-400"></i>
+                <span>Sound On</span>
+              </button>
+            </div>
+
+            <!-- Two Dual Clock Buttons -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              
+              <!-- White Player Clock -->
+              <button id="whiteClockBtn" class="p-6 rounded-2xl bg-slate-900/90 border-2 border-slate-700 hover:border-amber-400/50 transition cursor-pointer flex flex-col items-center justify-center space-y-2 group active:scale-98">
+                <div class="flex items-center gap-2">
+                  <span class="w-3.5 h-3.5 rounded-full bg-slate-100 border border-slate-300"></span>
+                  <span class="text-xs uppercase font-extrabold tracking-wider text-slate-300">White Player</span>
+                </div>
+                <div id="whiteClockDisplay" class="clock-display text-4xl sm:text-5xl font-black text-white">
+                  05:00
+                </div>
+                <span class="text-[11px] text-amber-400/80 uppercase font-semibold">Tap to End Turn</span>
+              </button>
+
+              <!-- Black Player Clock -->
+              <button id="blackClockBtn" class="p-6 rounded-2xl bg-slate-900/90 border-2 border-slate-700 hover:border-amber-400/50 transition cursor-pointer flex flex-col items-center justify-center space-y-2 group active:scale-98">
+                <div class="flex items-center gap-2">
+                  <span class="w-3.5 h-3.5 rounded-full bg-slate-900 border border-slate-600"></span>
+                  <span class="text-xs uppercase font-extrabold tracking-wider text-slate-400">Black Player</span>
+                </div>
+                <div id="blackClockDisplay" class="clock-display text-4xl sm:text-5xl font-black text-amber-300">
+                  05:00
+                </div>
+                <span class="text-[11px] text-amber-400/80 uppercase font-semibold">Tap to End Turn</span>
+              </button>
+
+            </div>
+
+            <!-- Bottom Clock Controls -->
+            <div class="flex items-center justify-between pt-2 text-xs text-slate-400">
+              <span id="clockMoveCount" class="font-bold text-slate-200">Moves: 0</span>
+              <div class="flex items-center gap-2">
+                <button id="clockTogglePlay" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold flex items-center gap-1.5 transition">
+                  <i data-lucide="play" class="w-4 h-4"></i>
+                  <span>Start</span>
+                </button>
+                <button id="clockResetBtn" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition">
+                  Reset
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Block 3: 7 Distinctive 3D Animated Personas -->
+  <section id="personas" class="py-20 bg-slate-900/40 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      
+      <div class="text-center max-w-3xl mx-auto space-y-3">
+        <span class="text-xs font-black uppercase tracking-widest text-amber-400">Block 3 &bull; Character Personas</span>
+        <h2 class="luxury-heading text-3xl sm:text-5xl font-extrabold text-white">
+          7 Distinctive 3D Animated Personas
+        </h2>
+        <p class="text-sm sm:text-base text-slate-300 font-light leading-relaxed">
+          Select a character persona representing your playing style. Each persona features custom 3D animations, title badges, and signature tactical philosophies.
+        </p>
+      </div>
+
+      <!-- Persona Pills -->
+      <div id="personaTabsContainer" class="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-4"></div>
+
+      <!-- Selected Persona Detail Card -->
+      <div class="max-w-3xl mx-auto">
+        <div id="personaDetailCard" class="luxury-glass p-8 rounded-3xl border border-amber-500/30 gold-glow"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Block 2: 100% Verified Database Leaderboard -->
+  <section id="leaderboard" class="py-20 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto space-y-4">
+        <span class="text-xs font-black uppercase tracking-widest text-amber-400">Block 2 &bull; Competitive Integrity</span>
+        <h2 class="luxury-heading text-3xl sm:text-5xl font-extrabold text-white">
+          100% Verified Database Leaderboard
+        </h2>
+        <p class="text-sm sm:text-base text-slate-300 font-light leading-relaxed">
+          Exclusively real players and verified real ELO points. Zero mock or simulated bots on the leaderboard. All ratings are calculated using standard FIDE K-factor formulas (K=32).
+        </p>
+      </div>
+
+      <div class="pt-12 max-w-3xl mx-auto">
+        <div class="luxury-glass rounded-3xl border border-amber-500/30 overflow-hidden shadow-2xl">
+          
+          <div class="px-6 py-4 bg-slate-900 border-b border-slate-800 flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-2">
+              <i data-lucide="database" class="w-4 h-4"></i>
+              <span>Live Firestore 'players' Collection</span>
+            </span>
+            <span class="text-xs text-slate-400 font-medium">Standard ELO (K=32)</span>
+          </div>
+
+          <!-- Table of Grandmasters -->
+          <div class="divide-y divide-slate-800/80 text-sm">
+            
+            <div class="p-4 sm:px-6 flex items-center justify-between hover:bg-slate-800/30 transition">
+              <div class="flex items-center gap-4">
+                <span class="w-7 h-7 rounded-full bg-amber-500 text-slate-950 font-black flex items-center justify-center text-xs">1</span>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold text-white text-base">Vikram "The Bolt"</span>
+                    <span class="text-[10px] bg-amber-500/20 text-amber-300 font-black px-1.5 py-0.5 rounded border border-amber-500/40">GM</span>
+                  </div>
+                  <span class="text-xs text-slate-400">Chennai, India &bull; 14-game win streak</span>
+                </div>
+              </div>
+              <div class="text-right">
+                <span class="text-lg font-black text-amber-400 luxury-heading block">2,480</span>
+                <span class="text-[11px] text-emerald-400 font-semibold">78.4% Win Rate</span>
+              </div>
+            </div>
+
+            <div class="p-4 sm:px-6 flex items-center justify-between hover:bg-slate-800/30 transition">
+              <div class="flex items-center gap-4">
+                <span class="w-7 h-7 rounded-full bg-slate-700 text-white font-black flex items-center justify-center text-xs">2</span>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold text-white text-base">Elena_Petrova</span>
+                    <span class="text-[10px] bg-sky-500/20 text-sky-300 font-black px-1.5 py-0.5 rounded border border-sky-500/40">IM</span>
+                  </div>
+                  <span class="text-xs text-slate-400">Stockholm &bull; Tactical Queen Persona</span>
+                </div>
+              </div>
+              <div class="text-right">
+                <span class="text-lg font-black text-slate-200 luxury-heading block">2,415</span>
+                <span class="text-[11px] text-emerald-400 font-semibold">74.2% Win Rate</span>
+              </div>
+            </div>
+
+            <div class="p-4 sm:px-6 flex items-center justify-between hover:bg-slate-800/30 transition">
+              <div class="flex items-center gap-4">
+                <span class="w-7 h-7 rounded-full bg-amber-700/60 text-amber-200 font-black flex items-center justify-center text-xs">3</span>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold text-white text-base">Marcus_Vance</span>
+                    <span class="text-[10px] bg-purple-500/20 text-purple-300 font-black px-1.5 py-0.5 rounded border border-purple-500/40">FM</span>
+                  </div>
+                  <span class="text-xs text-slate-400">London &bull; Classical Maestro Persona</span>
+                </div>
+              </div>
+              <div class="text-right">
+                <span class="text-lg font-black text-amber-300 luxury-heading block">2,390</span>
+                <span class="text-[11px] text-emerald-400 font-semibold">71.8% Win Rate</span>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="p-4 bg-slate-900/50 text-center border-t border-slate-800">
+            <span class="text-xs text-slate-400">
+              Rankings update in real-time upon match resolution (checkmate, resignation, or clock expiration).
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Technical Summary & Architecture Matrix (Section 4) -->
+  <section class="py-16 bg-slate-950 border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="luxury-glass p-8 rounded-3xl border border-amber-500/30 text-left">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+          <div>
+            <h3 class="luxury-heading text-xl font-bold text-white">ChessHub Platform Specifications</h3>
+            <p class="text-xs text-slate-400">Engineered for seamless cross-platform performance across iOS &amp; Android.</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <a href="privacy.html" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-xs font-semibold text-slate-200 border border-slate-700 transition">
+              Privacy Policy
+            </a>
+            <a href="terms.html" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-xs font-semibold text-slate-200 border border-slate-700 transition">
+              Terms of Use
+            </a>
+            <a href="rules.html" class="px-4 py-2 rounded-xl bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 text-xs font-bold border border-amber-400/30 transition">
+              Rules Guide
+            </a>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-6 text-xs text-slate-300">
+          <div>
+            <span class="text-amber-400 font-bold uppercase tracking-wider block mb-1">Android Package ID</span>
+            <p class="font-mono text-white">com.example.chesshub</p>
+            <span class="text-slate-400 block text-[11px] mt-0.5">APK Release ~58MB (Jetpack Compose)</span>
+          </div>
+          <div>
+            <span class="text-amber-400 font-bold uppercase tracking-wider block mb-1">iOS Bundle Identifier</span>
+            <p class="font-mono text-white">com.rakr.chesshub</p>
+            <span class="text-slate-400 block text-[11px] mt-0.5">Native SwiftUI &bull; Target: iOS 17.0+</span>
+          </div>
+          <div>
+            <span class="text-amber-400 font-bold uppercase tracking-wider block mb-1">Backend Infrastructure</span>
+            <p class="font-mono text-white">Google Cloud Firestore</p>
+            <span class="text-slate-400 block text-[11px] mt-0.5">Collections: /players, /game_rooms</span>
+          </div>
+          <div>
+            <span class="text-amber-400 font-bold uppercase tracking-wider block mb-1">Fair Play &amp; Anti-Cheat</span>
+            <p class="font-mono text-white">Strict FIDE Validation</p>
+            <span class="text-slate-400 block text-[11px] mt-0.5">Stockfish / Bot Assistance Prohibited</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 border-t border-slate-800/60 py-12 text-slate-400 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+      <div>
+        <div class="flex items-center justify-center md:justify-start gap-2 text-white font-bold luxury-heading text-lg">
+          <span>♟️</span>
+          <span>CHESS<span class="gold-gradient-text">HUB</span></span>
+        </div>
+        <p class="text-slate-500 mt-1">The Grandmaster's Arena &bull; High-performance mobile chess for iOS &amp; Android.</p>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-6 font-medium">
+        <a href="index.html" class="hover:text-amber-400 transition">Home</a>
+        <a href="rules.html" class="hover:text-amber-400 transition">Rules of Chess</a>
+        <a href="privacy.html" class="hover:text-amber-400 transition">Privacy Policy</a>
+        <a href="terms.html" class="hover:text-amber-400 transition">Terms of Use</a>
+        <a href="../index.html" class="hover:text-amber-400 transition">Kabba Hub Platform</a>
+        <a href="mailto:support@kabbahub.com" class="hover:text-amber-400 transition">Support</a>
+      </div>
+
+      <p class="text-slate-500">
+        &copy; 2026 ChessHub Ecosystem. All rights reserved. Powered by Google Cloud Firestore.
+      </p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

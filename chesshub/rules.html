@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Official Rules of Chess - ChessHub Master Guide</title>
+  <meta name="description" content="Master the official FIDE rules of chess with ChessHub. Comprehensive guide covering piece movements, castling, en passant, promotion, stalemate, and time controls.">
+
+  <!-- Mobile Theme & PWA -->
+  <meta name="theme-color" content="#0F172A">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+  <!-- Local Engine Scripts -->
+  <script src="tailwind.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: {
+              300: '#F3E5AB',
+              400: '#E5C158',
+              500: '#D4AF37',
+              600: '#AA820A',
+            },
+            slate: {
+              850: '#141E33',
+              900: '#0F172A',
+              950: '#0A0E1A',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script src="lucide.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .piece-board {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(8, 1fr);
+      aspect-ratio: 1;
+      border: 3px solid #D4AF37;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.7);
+    }
+    .p-sq {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      user-select: none;
+      position: relative;
+    }
+    .p-light { background-color: #E2E8F0; }
+    .p-dark { background-color: #334155; }
+    .p-highlight {
+      background-color: #F59E0B !important;
+      opacity: 0.85;
+    }
+    .p-move-dot::after {
+      content: '';
+      width: 14px;
+      height: 14px;
+      background-color: #D4AF37;
+      border-radius: 50%;
+      opacity: 0.9;
+      box-shadow: 0 0 8px #D4AF37;
+    }
+    .p-capture-ring::after {
+      content: '';
+      position: absolute;
+      width: 80%;
+      height: 80%;
+      border: 3px solid #EF4444;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body class="chess-radial-bg min-h-screen text-slate-200 antialiased selection:bg-amber-500 selection:text-slate-950">
+
+  <!-- Navigation Bar -->
+  <nav class="sticky top-0 z-50 bg-slate-950/90 backdrop-blur-md border-b border-amber-500/20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl border border-amber-500/40">
+          ♟️
+        </div>
+        <div>
+          <span class="text-xl font-black text-white luxury-heading">CHESS<span class="gold-gradient-text">HUB</span></span>
+          <span class="block text-[10px] tracking-widest uppercase font-semibold text-amber-400/80">Rules &amp; Master Strategy</span>
+        </div>
+      </a>
+
+      <div class="flex items-center gap-4 text-xs font-semibold text-slate-300">
+        <a href="index.html" class="hover:text-amber-400 transition">Back to App</a>
+        <a href="privacy.html" class="hover:text-amber-400 transition">Privacy</a>
+        <a href="terms.html" class="hover:text-amber-400 transition">Terms</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Header -->
+  <header class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8 text-center space-y-4">
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold uppercase tracking-wider">
+      <i data-lucide="book-open" class="w-4 h-4"></i>
+      <span>Official FIDE Handbook Standard</span>
+    </div>
+    <h1 class="luxury-heading text-3xl sm:text-5xl font-black text-white">
+      The Complete Guide to Chess
+    </h1>
+    <p class="text-sm sm:text-base text-slate-400 max-w-2xl mx-auto font-light leading-relaxed">
+      Whether you are an aspiring grandmaster or a casual player in our matchmaking arena, master the mechanics of piece movement, tactical maneuvers, and endgame victory conditions.
+    </p>
+
+    <!-- Quick Jump Tabs -->
+    <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 pt-4 text-xs font-bold">
+      <a href="#pieces" class="px-4 py-2 rounded-xl bg-slate-900 border border-amber-500/30 text-amber-300 hover:bg-amber-500 hover:text-slate-950 transition">
+        ♟️ The 6 Pieces
+      </a>
+      <a href="#special-moves" class="px-4 py-2 rounded-xl bg-slate-900 border border-amber-500/30 text-amber-300 hover:bg-amber-500 hover:text-slate-950 transition">
+        ⚡ Special Moves
+      </a>
+      <a href="#draws" class="px-4 py-2 rounded-xl bg-slate-900 border border-amber-500/30 text-amber-300 hover:bg-amber-500 hover:text-slate-950 transition">
+        🤝 Draws &amp; Endgames
+      </a>
+      <a href="#time-controls" class="px-4 py-2 rounded-xl bg-slate-900 border border-amber-500/30 text-amber-300 hover:bg-amber-500 hover:text-slate-950 transition">
+        ⏱️ Time Controls
+      </a>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-16">
+
+    <!-- Section 1: The 6 Pieces & Movements -->
+    <section id="pieces" class="space-y-8 scroll-mt-24">
+      <div class="border-b border-slate-800 pb-4">
+        <h2 class="luxury-heading text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-3">
+          <span class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg">1</span>
+          <span>The Six Pieces &amp; How They Move</span>
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-400 mt-1 font-light">
+          Each piece possesses a unique trajectory, valuation, and tactical role on the 64-square battlefield.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- King Card -->
+        <div class="luxury-glass p-6 rounded-2xl border border-amber-500/20 space-y-4 hover:border-amber-500/40 transition">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-4xl">♚</span>
+              <div>
+                <h3 class="text-lg font-bold text-white">The King</h3>
+                <span class="text-xs text-amber-400 font-semibold uppercase">Priceless / Infinite Value</span>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-300 text-xs font-mono font-bold">1 Square</span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-light">
+            Moves exactly one square in any direction (horizontal, vertical, or diagonal). The King can never step into check (a square attacked by an enemy piece). If threatened, the King must escape, block, or capture the attacking piece. If no escape exists, it is <strong>Checkmate</strong>.
+          </p>
+          <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400">
+            <strong class="text-white">Tactical Role:</strong> Vulnerable in early game; powerful attacking unit in the endgame.
+          </div>
+        </div>
+
+        <!-- Queen Card -->
+        <div class="luxury-glass p-6 rounded-2xl border border-amber-500/20 space-y-4 hover:border-amber-500/40 transition">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-4xl">♛</span>
+              <div>
+                <h3 class="text-lg font-bold text-white">The Queen</h3>
+                <span class="text-xs text-amber-400 font-semibold uppercase">9 Points</span>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-300 text-xs font-mono font-bold">Any Distance</span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-light">
+            The most potent piece on the board. Moves any number of unoccupied squares horizontally, vertically, or diagonally, combining the full operational powers of both the Rook and Bishop.
+          </p>
+          <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400">
+            <strong class="text-white">Tactical Role:</strong> Devastating offensive power and dual-fork attacks. Guard her cautiously.
+          </div>
+        </div>
+
+        <!-- Rook Card -->
+        <div class="luxury-glass p-6 rounded-2xl border border-amber-500/20 space-y-4 hover:border-amber-500/40 transition">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-4xl">♜</span>
+              <div>
+                <h3 class="text-lg font-bold text-white">The Rook</h3>
+                <span class="text-xs text-amber-400 font-semibold uppercase">5 Points</span>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-300 text-xs font-mono font-bold">Files &amp; Ranks</span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-light">
+            Moves any number of unoccupied squares forward, backward, left, or right along straight ranks and files. Also collaborates with the King in the vital defensive maneuver known as <strong>Castling</strong>.
+          </p>
+          <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400">
+            <strong class="text-white">Tactical Role:</strong> Dominates open files, cuts off enemy Kings, and controls the 7th rank.
+          </div>
+        </div>
+
+        <!-- Bishop Card -->
+        <div class="luxury-glass p-6 rounded-2xl border border-amber-500/20 space-y-4 hover:border-amber-500/40 transition">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-4xl">♝</span>
+              <div>
+                <h3 class="text-lg font-bold text-white">The Bishop</h3>
+                <span class="text-xs text-amber-400 font-semibold uppercase">3 Points</span>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-300 text-xs font-mono font-bold">Diagonals</span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-light">
+            Moves any number of unoccupied squares diagonally. Each player starts with one light-squared and one dark-squared Bishop; a Bishop never changes the color of the squares it travels on.
+          </p>
+          <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400">
+            <strong class="text-white">Tactical Role:</strong> Long-range diagonal snipers. The 'Bishop Pair' is a formidable endgame advantage.
+          </div>
+        </div>
+
+        <!-- Knight Card -->
+        <div class="luxury-glass p-6 rounded-2xl border border-amber-500/20 space-y-4 hover:border-amber-500/40 transition">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-4xl">♞</span>
+              <div>
+                <h3 class="text-lg font-bold text-white">The Knight</h3>
+                <span class="text-xs text-amber-400 font-semibold uppercase">3 Points</span>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-300 text-xs font-mono font-bold">L-Shape Jump</span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-light">
+            Moves in an 'L' shape: two squares in one cardinal direction and then one square perpendicular. The Knight is the <strong>only piece capable of jumping over other pieces</strong>, making it lethal in crowded closed positions.
+          </p>
+          <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400">
+            <strong class="text-white">Tactical Role:</strong> Master of unexpected forks (attacking King and Queen simultaneously).
+          </div>
+        </div>
+
+        <!-- Pawn Card -->
+        <div class="luxury-glass p-6 rounded-2xl border border-amber-500/20 space-y-4 hover:border-amber-500/40 transition">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-4xl">♟</span>
+              <div>
+                <h3 class="text-lg font-bold text-white">The Pawn</h3>
+                <span class="text-xs text-amber-400 font-semibold uppercase">1 Point</span>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-300 text-xs font-mono font-bold">Forward 1 or 2</span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-light">
+            Moves forward one square at a time, but captures one square diagonally forward. On its very first move from rank 2 (white) or rank 7 (black), a pawn has the option to advance <strong>two squares forward</strong>.
+          </p>
+          <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400">
+            <strong class="text-white">Tactical Role:</strong> The soul of chess. Pawns determine board structure and can promote into Queens!
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 2: Special Moves -->
+    <section id="special-moves" class="space-y-8 scroll-mt-24">
+      <div class="border-b border-slate-800 pb-4">
+        <h2 class="luxury-heading text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-3">
+          <span class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg">2</span>
+          <span>The Three Special Rules of Chess</span>
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-400 mt-1 font-light">
+          Three unique tactical mechanics that every competitive player in ChessHub must understand.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- Castling -->
+        <div class="luxury-glass p-6 sm:p-7 rounded-3xl border border-amber-500/20 space-y-4 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl border border-amber-500/30">
+              🏰
+            </div>
+            <h3 class="text-xl font-bold text-white">1. Castling (O-O &amp; O-O-O)</h3>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-light">
+              The only move in chess where two pieces move in a single turn. The King moves two squares toward a Rook, and that Rook leaps directly over the King to the adjacent square.
+            </p>
+            <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 space-y-2 text-xs text-slate-300 font-light">
+              <strong class="text-amber-400 block font-semibold">Strict Castling Requirements:</strong>
+              <ul class="list-disc list-inside space-y-1">
+                <li>Neither King nor target Rook has moved prior.</li>
+                <li>All squares between King and Rook are empty.</li>
+                <li>The King is not currently in check.</li>
+                <li>The King does not pass through or land on attacked squares.</li>
+              </ul>
+            </div>
+          </div>
+          <span class="text-xs font-mono text-amber-300 font-bold block pt-2">Kingside (O-O) &bull; Queenside (O-O-O)</span>
+        </div>
+
+        <!-- En Passant -->
+        <div class="luxury-glass p-6 sm:p-7 rounded-3xl border border-amber-500/20 space-y-4 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl border border-amber-500/30">
+              ⚔️
+            </div>
+            <h3 class="text-xl font-bold text-white">2. En Passant ("In Passing")</h3>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-light">
+              A special pawn capture. If an opposing pawn advances two squares from its starting square and lands directly adjacent horizontally to your pawn, you may capture that pawn diagonally as if it had only advanced one square.
+            </p>
+            <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 space-y-2 text-xs text-slate-300 font-light">
+              <strong class="text-amber-400 block font-semibold">Strict Timing Requirement:</strong>
+              <p>
+                En passant <strong>must be executed immediately on the very next turn</strong>. If you make any other move on the board, the right to capture en passant is permanently lost.
+              </p>
+            </div>
+          </div>
+          <span class="text-xs font-mono text-amber-300 font-bold block pt-2">FIDE Article 3.7.d &bull; Handled automatically in ChessHub</span>
+        </div>
+
+        <!-- Pawn Promotion -->
+        <div class="luxury-glass p-6 sm:p-7 rounded-3xl border border-amber-500/20 space-y-4 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl border border-amber-500/30">
+              👑
+            </div>
+            <h3 class="text-xl font-bold text-white">3. Pawn Promotion</h3>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-light">
+              When a pawn reaches the eighth rank (farthest opposing rank), it immediately ascends into a <strong>Queen, Rook, Bishop, or Knight</strong> of the same color, chosen by the player.
+            </p>
+            <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 space-y-2 text-xs text-slate-300 font-light">
+              <strong class="text-amber-400 block font-semibold">Multiple Queens Permitted:</strong>
+              <p>
+                Promotion is not restricted to previously captured pieces. A player can legally possess multiple Queens on the board at the same time. ChessHub prompts an interactive piece selection modal upon reaching rank 8.
+              </p>
+            </div>
+          </div>
+          <span class="text-xs font-mono text-amber-300 font-bold block pt-2">98% of promotions choose Queen (Underpromotion for Knight forks)</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 3: Draws & Endgames -->
+    <section id="draws" class="space-y-8 scroll-mt-24">
+      <div class="border-b border-slate-800 pb-4">
+        <h2 class="luxury-heading text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-3">
+          <span class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg">3</span>
+          <span>Victory, Draws &amp; Termination Conditions</span>
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-400 mt-1 font-light">
+          How games finish on ChessHub and how ELO points are awarded or divided.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+
+        <!-- Checkmate -->
+        <div class="luxury-glass p-6 rounded-2xl border border-emerald-500/30 space-y-3">
+          <div class="flex items-center gap-3">
+            <span class="text-3xl">🏆</span>
+            <div>
+              <h3 class="text-lg font-bold text-white">Checkmate (1 - 0 or 0 - 1)</h3>
+              <span class="text-xs text-emerald-400 font-semibold uppercase">Decisive Victory</span>
+            </div>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
+            The King is placed in check, and there are zero legal moves to escape check, block the check, or capture the threatening piece. The game ends instantly without capturing the King. Full ELO gains awarded (<code class="text-amber-300 bg-slate-950 px-1.5 py-0.5 rounded">K=32</code>).
+          </p>
+        </div>
+
+        <!-- Stalemate -->
+        <div class="luxury-glass p-6 rounded-2xl border border-amber-500/30 space-y-3">
+          <div class="flex items-center gap-3">
+            <span class="text-3xl">🛑</span>
+            <div>
+              <h3 class="text-lg font-bold text-white">Stalemate (&frac12; - &frac12;)</h3>
+              <span class="text-xs text-amber-400 font-semibold uppercase">Immediate Draw</span>
+            </div>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
+            The player whose turn it is has <strong>no legal moves</strong>, but their King is <strong>not in check</strong>. The game ends immediately as a draw. Even if one side is up 30 points of material, stalemate splits the score!
+          </p>
+        </div>
+
+        <!-- Threefold Repetition -->
+        <div class="luxury-glass p-6 rounded-2xl border border-slate-800 space-y-3">
+          <div class="flex items-center gap-3">
+            <span class="text-3xl">🔄</span>
+            <div>
+              <h3 class="text-lg font-bold text-white">Threefold Repetition (&frac12; - &frac12;)</h3>
+              <span class="text-xs text-slate-400 font-semibold uppercase">Repetitive Board State</span>
+            </div>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
+            If the exact identical board position occurs 3 times with the same player to move and the identical set of legal moves available (including castling and en passant rights), a draw is declared. ChessHub automatically verifies FEN strings in Cloud Firestore.
+          </p>
+        </div>
+
+        <!-- 50-Move Rule -->
+        <div class="luxury-glass p-6 rounded-2xl border border-slate-800 space-y-3">
+          <div class="flex items-center gap-3">
+            <span class="text-3xl">⏳</span>
+            <div>
+              <h3 class="text-lg font-bold text-white">50-Move Rule (&frac12; - &frac12;)</h3>
+              <span class="text-xs text-slate-400 font-semibold uppercase">Endgame Rule</span>
+            </div>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
+            If both players complete 50 consecutive turns without a single pawn move and without a single piece capture, the match may be concluded as a technical draw to prevent indefinite games.
+          </p>
+        </div>
+
+        <!-- Mutual Draw Agreement -->
+        <div class="luxury-glass p-6 rounded-2xl border border-slate-800 space-y-3">
+          <div class="flex items-center gap-3">
+            <span class="text-3xl">🤝</span>
+            <div>
+              <h3 class="text-lg font-bold text-white">Mutual Draw Agreement</h3>
+              <span class="text-xs text-slate-400 font-semibold uppercase">Player Protocol</span>
+            </div>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
+            A player proposes a draw via the in-game dialog. If the opponent accepts, the draw is committed immediately to Firestore and both players share ELO calculations evenly. If declined, play continues without pause.
+          </p>
+        </div>
+
+        <!-- Insufficient Material -->
+        <div class="luxury-glass p-6 rounded-2xl border border-slate-800 space-y-3">
+          <div class="flex items-center gap-3">
+            <span class="text-3xl">⚖️</span>
+            <div>
+              <h3 class="text-lg font-bold text-white">Insufficient Mating Material</h3>
+              <span class="text-xs text-slate-400 font-semibold uppercase">FIDE Article 6.9</span>
+            </div>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
+            When neither side has enough pieces to force checkmate by any sequence of legal moves (e.g., King vs King, King &amp; Bishop vs King, King &amp; Knight vs King). If a player times out but the opponent has insufficient material, it is scored as a draw.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 4: Time Controls & Clock Management -->
+    <section id="time-controls" class="space-y-8 scroll-mt-24">
+      <div class="border-b border-slate-800 pb-4">
+        <h2 class="luxury-heading text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-3">
+          <span class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg">4</span>
+          <span>Competitive Time Controls in ChessHub</span>
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-400 mt-1 font-light">
+          Online multiplayer and local Pass &amp; Play dual clocks support three official competitive formats.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Bullet -->
+        <div class="luxury-glass p-6 rounded-3xl border border-amber-500/25 space-y-4 text-center">
+          <div class="text-4xl">⚡</div>
+          <h3 class="text-xl font-bold text-white">Bullet (1 Min)</h3>
+          <p class="text-xs text-slate-300 leading-relaxed font-light">
+            Fast-paced, lightning chess. 60 seconds total on your clock for the entire match. Requires instant pattern recognition, rapid mouse/touch reflexes, and sharp premoves.
+          </p>
+          <div class="text-amber-400 font-mono text-xs font-bold pt-2 border-t border-slate-800">
+            K=32 ELO Rating Bracket
+          </div>
+        </div>
+
+        <!-- Blitz -->
+        <div class="luxury-glass p-6 rounded-3xl border border-amber-500/40 bg-amber-500/[0.04] space-y-4 text-center ring-1 ring-amber-500/30">
+          <div class="inline-block px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-bold uppercase tracking-wider">
+            Most Popular
+          </div>
+          <div class="text-4xl">🔥</div>
+          <h3 class="text-xl font-bold text-white">Blitz (3 Min &amp; 5 Min)</h3>
+          <p class="text-xs text-slate-300 leading-relaxed font-light">
+            The ideal equilibrium between deep tactical precision and intense time pressure. Play with 3 or 5 minutes per side. The favorite format of club champions and streaming grandmasters.
+          </p>
+          <div class="text-amber-400 font-mono text-xs font-bold pt-2 border-t border-slate-800">
+            K=32 ELO Rating Bracket
+          </div>
+        </div>
+
+        <!-- Rapid -->
+        <div class="luxury-glass p-6 rounded-3xl border border-amber-500/25 space-y-4 text-center">
+          <div class="text-4xl">🕰️</div>
+          <h3 class="text-xl font-bold text-white">Rapid (10 Min)</h3>
+          <p class="text-xs text-slate-300 leading-relaxed font-light">
+            Classical strategic depth. 10 minutes per player gives you ample room to calculate multiple lines, formulate deep positional sacrifices, and execute flawless pawn endgames.
+          </p>
+          <div class="text-amber-400 font-mono text-xs font-bold pt-2 border-t border-slate-800">
+            K=32 ELO Rating Bracket
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Over the Board Dual Clock Feature Banner -->
+      <div class="luxury-glass p-6 sm:p-8 rounded-3xl border border-amber-500/30 bg-gradient-to-r from-slate-900 via-amber-950/20 to-slate-900 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="space-y-2 text-left">
+          <h3 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+            <i data-lucide="smartphone" class="w-5 h-5 text-amber-400"></i>
+            <span>Experience the In-App Dual Clock</span>
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-300 font-light max-w-xl">
+            Playing on a physical board with a friend? Use ChessHub's Over-The-Board Pass &amp; Play dual clock on a single mobile screen, complete with authentic acoustic clicks and per-device audio mute toggles.
+          </p>
+        </div>
+        <a href="index.html#dual-clock" class="px-6 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black text-xs uppercase tracking-wider hover:brightness-110 shadow-lg shadow-amber-500/20 transition whitespace-nowrap">
+          Try Live Clock Demo
+        </a>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800/80 py-8 text-center text-xs text-slate-500">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <span>&copy; 2026 ChessHub. All rights reserved.</span>
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="hover:text-amber-400 transition">App Home</a>
+        <a href="privacy.html" class="hover:text-amber-400 transition">Privacy Policy</a>
+        <a href="terms.html" class="hover:text-amber-400 transition">Terms of Use</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    if (window.lucide) window.lucide.createIcons();
+  </script>
+</body>
+</html>
